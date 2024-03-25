@@ -16,6 +16,6 @@
             <li><a href="/game-recommendation-app/components/landing.php">Home</a></li>
             <li><a href="/game-recommendation-app/components/about.php">About</a></li>
             <li><a href="/game-recommendation-app/components/login.php">Login</a></li>
-            <li><a href="/game-recommendation-app/components/register.php">Register</a></li>
+            <li><a href="/game-recommendation-app/components/signup.php">Register</a></li>
         </ul>
     </nav>

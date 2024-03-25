@@ -13,7 +13,7 @@ include('landing/landingHeader.php');
     <h3>We can help with that.</h3>
   </div>
 
-  <button class="register-button"><a href="/game-recommendation-app/components/register.php">REGISTER NOW</a></button>
+  <button class="register-button"><a href="/game-recommendation-app/components/signup.php">REGISTER NOW</a></button>
 </div>
 
 <div class="testimonial-container">

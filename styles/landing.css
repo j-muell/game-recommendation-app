@@ -4,7 +4,7 @@
     Name: Jason Mueller
     File: landing.css
     Date: 2024-03-23
-    Purpose: stylesheet for the main landing page of GameQuest
+    Purpose: stylesheet for the main landing page of GameQuest & the login and register pages.
 */
 
 * {
@@ -197,7 +197,6 @@ footer {
   bottom: 0;
   background: #55423d;
   padding: 25px 0 40px 0;
-  margin-top: 50px;
   display: flex;
   justify-content: center;
   width: 100%;
@@ -239,4 +238,242 @@ footer .cols .links-col a:hover {
 
 footer .cols .links-col a i {
   font-size: 1.25rem;
+}
+
+/*                                                LOGIN                          */
+
+.login-page-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: url("/game-recommendation-app/images/mountain2.jpg");
+  background-size: cover;
+}
+
+.login-section-wrapper {
+  position: relative;
+  width: 500px;
+  height: 540px;
+  background: transparent;
+  border: 2px solid #ffc0ad;
+  border-radius: 20px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-section-wrapper .form-box {
+  width: 100%;
+  padding: 50px;
+}
+
+.form-box h2 {
+  font-size: 2rem;
+  color: #271c19; /* text inside registration */
+  text-align: center;
+}
+
+.login-input-box {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  border-bottom: 2px solid #271c19;
+  margin: 30px 0;
+}
+
+.login-input-box label {
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  font-size: 1em;
+  color: #271c19;
+  font-weight: 500;
+  pointer-events: none;
+  transition: 0.5s;
+}
+
+.login-input-box input:focus ~ label,
+.login-input-box input:valid ~ label {
+  top: -5px;
+}
+
+.login-input-box input {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 1em;
+  color: #271c19;
+  font-weight: 600;
+}
+
+.login-input-box .icon {
+  position: absolute;
+  right: 8px;
+  font-size: 1.2em;
+  color: #271c19;
+  line-height: 57px;
+}
+
+.login-button {
+  width: 100%;
+  justify-self: center;
+  height: 45px;
+  background-color: #55423d;
+  border: none;
+  outline: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #271c19;
+  font-weight: 500;
+  font-size: 1em;
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #ffc0ad;
+}
+
+.login-register {
+  font-size: 0.9em;
+  color: #271c19;
+  text-align: center;
+  font-weight: 500;
+  margin: 25px 0 10px;
+}
+
+.login-register p a {
+  color: #271c19;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.login-register p a:hover {
+  text-decoration: underline;
+}
+
+/*                                              SIGN UP PAGE                     */
+
+.signup-page-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: url("/game-recommendation-app/images/mountain2.jpg");
+  background-size: cover;
+}
+
+.signup-section-wrapper {
+  position: relative;
+  width: 500px;
+  height: 540px;
+  background: transparent;
+  border: 2px solid #ffc0ad;
+  border-radius: 20px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.signup-section-wrapper .form-box {
+  width: 100%;
+  padding: 50px;
+}
+
+.form-box h2 {
+  font-size: 2rem;
+  color: #271c19; /* text inside registration */
+  text-align: center;
+}
+
+.signup-input-box:first-of-type {
+  margin: 0;
+}
+
+.signup-input-box {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  border-bottom: 2px solid #271c19;
+  margin: 30px 0;
+}
+
+.signup-input-box label {
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  font-size: 1em;
+  color: #271c19;
+  font-weight: 500;
+  pointer-events: none;
+  transition: 0.5s;
+}
+
+.signup-input-box input:focus ~ label,
+.signup-input-box input:valid ~ label {
+  top: -5px;
+}
+
+.signup-input-box input {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 1em;
+  color: #271c19;
+  font-weight: 600;
+}
+
+.signup-input-box .icon {
+  position: absolute;
+  right: 8px;
+  font-size: 1.2em;
+  color: #271c19;
+  line-height: 57px;
+}
+
+.signup-button {
+  width: 100%;
+  justify-self: center;
+  height: 45px;
+  background-color: #55423d;
+  border: none;
+  outline: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #271c19;
+  font-weight: 500;
+  font-size: 1em;
+  transition: background-color 0.3s ease;
+}
+
+.signup-button:hover {
+  background-color: #ffc0ad;
+}
+
+.signup-register {
+  font-size: 0.9em;
+  color: #271c19;
+  text-align: center;
+  font-weight: 500;
+  margin: 25px 0 10px;
+}
+
+.signup-register p a {
+  color: #271c19;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.signup-register p a:hover {
+  text-decoration: underline;
 }

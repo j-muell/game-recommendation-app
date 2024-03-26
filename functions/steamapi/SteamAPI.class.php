@@ -9,8 +9,12 @@ class SteamAPI
 	private $pre_url = 'https://api.steampowered.com/';
 
 
-	public function __construct($api_key)
+	public function __construct()
 	{
+		$config = parse_ini_file('config.ini');
+
+
+		$api_key = $config['api_key'];
 		if (!empty($api_key)) {
 			$this->api_key = $api_key;
 		}
@@ -24,9 +28,54 @@ class SteamAPI
 	# GENERAL METHODS #
 	###################
 
+	// THIS FUNCTION WILL RESOLVE THE VANITY URL GIVEN AND RETURN THE STEAM ID.
+	public function resolveURL($steamid)
+	{
+		if (is_string($steamid)) {
+			if (preg_match('/^\d{17}$/', $steamid)) {
+				return $steamid;
+			} else {
+				$url = $this->pre_url . 'ISteamUser/ResolveVanityURL/v0001/?key=' . $this->api_key . '&vanityurl=' . $steamid;
+				$contents = $this->get_content($url);
+				if (isset($contents['response']['steamid'])) {
+					return $contents['response']['steamid'];
+				} else {
+					throw new Exception("Vanity URL resolution failed.");
+				}
+			}
+		} elseif (is_array($steamid)) {
+			foreach ($steamid as &$id) {
+				if (!is_string($id)) {
+					throw new Exception("Invalid steamid: $id");
+				}
+
+				if (preg_match('/^\d{17}$/', $id)) {
+					continue;
+				} else {
+					$url = $this->pre_url . 'ISteamUser/ResolveVanityURL/v0001/?key=' . $this->api_key . '&vanityurl=' . $id;
+					$contents = $this->get_content($url);
+					if (isset($contents['response']['steamid'])) {
+						$id = $contents['response']['steamid'];
+					} else {
+						// Vanity URL resolution failed for this element
+						throw new Exception("Vanity URL resolution failed for steamid: $id");
+					}
+				}
+			}
+			return $steamid;
+		} else {
+			throw new Exception("Invalid steamid type: " . gettype($steamid));
+		}
+	}
+
+
+
+
+
 	// original had error $this expected as array but was string. from line 7.
 	private function add_steam_id($steamid)
 	{
+		$steamid = $this->resolveURL($steamid);
 		if (strlen($this->ids) == 0) {
 			$this->ids .= $steamid;
 		} else {
@@ -50,6 +99,7 @@ class SteamAPI
 		}
 	}
 
+	// turns the steamids into an array.
 	private function array_steamids($steamids)
 	{
 		$required = ',';
@@ -67,6 +117,7 @@ class SteamAPI
 
 	public function GetPlayerInfo($steamids)
 	{
+		$steamids = $this->resolveURL($steamids);
 		$url = $this->pre_url . 'ISteamUser/GetPlayerSummaries/v0002/?key=' . $this->api_key . '&steamids=' . $steamids;
 		$contents = $this->get_content($url);
 		$contents = $contents['response']['players'];
@@ -89,7 +140,7 @@ class SteamAPI
 			"6" => "LookingToPlay"
 		);
 
-		$countries = $this->get_content('steam_countries.json');
+		$countries = $this->get_content('../functions/steamapi/steam_countries.json');
 
 		$players = array();
 
@@ -146,6 +197,7 @@ class SteamAPI
 	public function GetPlayerGames($steamids)
 	{
 		$steamids = $this->array_steamids($steamids);
+		$steamids = $this->resolveURL($steamids);
 
 		$return = [];
 
@@ -186,6 +238,7 @@ class SteamAPI
 	public function GetRecentPlayedGames($steamids, $limit = 3)
 	{
 		$steamids = $this->array_steamids($steamids);
+		$steamids = $this->resolveURL($steamids);
 
 		$return = [];
 
@@ -226,6 +279,7 @@ class SteamAPI
 	public function GetFriendsList($steamids)
 	{
 		$steamids = $this->array_steamids($steamids);
+		$steamids = $this->resolveURL($steamids);
 
 		$return = [];
 
@@ -295,6 +349,7 @@ class SteamAPI
 	public function GetPlayerBans($steamids)
 	{
 		$steamids = $this->array_steamids($steamids);
+		$steamids = $this->resolveURL($steamids);
 
 		$bans = [];
 
@@ -322,6 +377,7 @@ class SteamAPI
 	public function GetPlayerBadges($steamids)
 	{
 		$steamids = $this->array_steamids($steamids);
+		$steamids = $this->resolveURL($steamids);
 
 		$players = [];
 
@@ -361,6 +417,8 @@ class SteamAPI
 
 	public function GetPlayersFriendship($id1, $id2)
 	{
+		$id1 = $this->resolveURL($id1);
+		$id2 = $this->resolveURL($id2);
 		$friendsPlayer1 = $this->GetFriendsList($id1);
 		$players = $this->GetPlayerInfo($id1 . ',' . $id2);
 		$flag = false;
@@ -407,6 +465,8 @@ class SteamAPI
 
 	public function playesStatsForGame($steamid, $appid)
 	{
+
+		$steamid = $this->resolveURL($steamid);
 
 		$url = $this->pre_url . "ISteamUserStats/GetUserStatsForGame/v0002/?appid={$appid}&key={$this->api_key}&steamid={$steamid}";
 

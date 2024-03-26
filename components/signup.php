@@ -14,7 +14,7 @@ include('landing/landingHeader.php');
                     <label>Username</label>
                 </div>
                 <div class="signup-input-box">
-                    <span class="icon"><a href="https://help.steampowered.com/en/faqs/view/2816-BE67-5B69-0FEC" class="question-anchor" target="_blank"><i class='bx bx-question-mark' id="question" title="Steam ID is required in order to give recommendation. Click to find out how to find your Steam ID."></i></a></span>
+                    <span class="icon"><a href="https://help.steampowered.com/en/faqs/view/2816-BE67-5B69-0FEC" class="question-anchor" target="_blank"><i class='bx bx-question-mark' id="question" title="Steam ID is required in order to give recommendation. Click to find out how to find your Steam ID. NOTE: Your steam profile must be set to public for this app to function!"></i></a></span>
                     <input type="text" name="steamID" required>
                     <label>Steam ID</label>
                 </div>

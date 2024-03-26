@@ -483,6 +483,17 @@ footer .cols .links-col a i {
   color: #271c19;
 }
 
-/* #question:hover:after {
-  position: absolute;
-} */
+.terms {
+  font-size: 0.9em;
+  color: #271c19;
+  font-weight: 500;
+  margin: -15px 0 15px;
+  display: flex;
+  justify-content: flex-start;
+  padding-top: 20px;
+}
+
+.terms label input {
+  accent-color: #271c19;
+  margin-right: 3px;
+}

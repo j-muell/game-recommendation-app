@@ -7,7 +7,7 @@ include('landing/landingHeader.php');
     <div class="signup-section-wrapper">
         <div class="form-box">
             <h2>Register</h2>
-            <form action="register-inc.php" method="post">
+            <form action="../includes/signup-inc.php" method="post">
                 <div class="signup-input-box">
                     <span class="icon"><i class='bx bxs-user'></i></span>
                     <input type="text" name="userID" required>
@@ -28,7 +28,11 @@ include('landing/landingHeader.php');
                     <input type="password" name="pwd2" required>
                     <label>Password Confirmation</label>
                 </div>
-                <button type="submit" class="signup-button">Sign Up</button>
+                <div class="terms">
+                    <label><input type="checkbox" name="terms">
+                        I agree to the terms and conditions.</label>
+                </div>
+                <button type="submit" name="submit" class="signup-button">Sign Up</button>
 
                 <div class="signup-register">
                     <p>Already have an account?

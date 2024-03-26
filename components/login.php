@@ -7,7 +7,7 @@ include('landing/landingHeader.php');
     <div class="login-section-wrapper">
         <div class="form-box login">
             <h2>Login</h2>
-            <form action="login-inc.php" method="post">
+            <form action="../includes/login-inc.php" method="post">
                 <div class="login-input-box">
                     <span class="icon"><i class='bx bxs-user'></i></span>
                     <input type="text" name="userID" required>

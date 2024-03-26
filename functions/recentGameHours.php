@@ -25,10 +25,24 @@ function debug_to_console($data)
 }
 
 
+// $validID = $steamAPI->steamIDExists($vanity_id);
+
+$returnVisibility = $steamAPI->isProfilePublicTest($steam_id);
+
+// if (!$validID) {
+//     $valid = true;
+//     echo "true";
+// } else {
+//     echo "false";
+// }
+
+$valid = false;
+
 echo "<pre>";
-print_r($handler);
+print_r($returnVisibility);
+// print_r($handler);
 print_r($profile);
-print_r($profile[0]['avatar']);
+// print_r($profile[0]['avatar']);
 
 // EXAMPLE OF HOW TO ACCESS THINGS FROM THE API AND SEND IN AN HTML ELEMENT.
 // USING THE RETURNED INFORMATION, USE 0 TO ACCESS THE FIRST 'profile'. THEN ENTER THE KEY(s) YOU WISH TO RETURN A VALUE.

@@ -68,9 +68,54 @@ class SteamAPI
 		}
 	}
 
+	// THIS FUNCTION IS INTENDED TO SIMPLY CHECK IF THE STEAM ID EXISTS AT ALL.
+	public function steamIDExists($steamid)
+	{
+		try {
+			// Attempt to resolve the SteamID using the existing resolveURL() function
+			$resolvedID = $this->resolveURL($steamid);
+
+			// If resolveURL() succeeds without throwing an exception, the SteamID exists
+			return true;
+		} catch (Exception $e) {
+			// If resolveURL() throws an exception, the SteamID does not exist
+			return false;
+		}
+	}
+
+	// CHECKS IF PROFILE IS SET TO PUBLIC.
+	public function isProfilePublic($steamid)
+	{
+		$steamid = $this->resolveURL($steamid);
+		// Get player info using the existing GetPlayerInfo() function
+		$playerInfo = $this->GetPlayerInfo($steamid);
+
+		// Iterate through player info to check if visibility is set to "Public"
+		foreach ($playerInfo as $player) {
+			if ($player['communityvisibilitystate'] === 'Public') {
+				return true; // Profile is public
+			}
+		}
+
+		return false; // Profile is not public
+	}
 
 
+	public function isProfilePublicTest($steamid)
+	{
+		$steamid = $this->resolveURL($steamid);
+		// Get player info using the existing GetPlayerInfo() function
+		$playerInfo = $this->GetPlayerInfo($steamid);
 
+		// Iterate through player info to check if visibility is set to "Public"
+		foreach ($playerInfo as $player) {
+			if ($player['communityvisibilitystate'] === 'Public') {
+				return true; // Profile is public
+			}
+		}
+
+		return $player['communityvisibilitystate']; // Profile is not public
+	}
 
 	// original had error $this expected as array but was string. from line 7.
 	private function add_steam_id($steamid)

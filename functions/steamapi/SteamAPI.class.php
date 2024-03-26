@@ -92,7 +92,8 @@ class SteamAPI
 
 		// Iterate through player info to check if visibility is set to "Public"
 		foreach ($playerInfo as $player) {
-			if ($player['communityvisibilitystate'] === 'Public') {
+
+			if ($player['communityvisibilitystate'] === 'Public' || $player['communityvisibilitystate'] === 'FriendsOfFriends') {
 				return true; // Profile is public
 			}
 		}
@@ -109,8 +110,8 @@ class SteamAPI
 
 		// Iterate through player info to check if visibility is set to "Public"
 		foreach ($playerInfo as $player) {
-			if ($player['communityvisibilitystate'] === 'Public') {
-				return true; // Profile is public
+			if ($player['communityvisibilitystate'] === 'Public' || $player['communityvisibilitystate'] === 'FriendsOfFriends') {
+				return $player['communityvisibilitystate']; // Profile is public
 			}
 		}
 

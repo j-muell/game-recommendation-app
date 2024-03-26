@@ -24,17 +24,17 @@ if (isset($_POST["submit"])) {
         exit();
     }
     if (pwdMatch($pwd, $pwdConfirm) !== false) {
-        header("location: ../components/signup.php?error=passwdnonmatch");
+        header("location: ../components/signup.php?error=passwddontmatch");
         exit();
     }
     if (userExists($conn, $username) !== false) {
         header("location: ../components/signup.php?error=usernameTaken");
         exit();
     }
-    if (invalidSteamID($steamid) !== false) {
-        header("location: ../components/signup.php?error=steamiddoesnotexist");
-        exit();
-    }
+    // if (invalidSteamID($steamid) !== false) {
+    //     header("location: ../components/signup.php?error=steamiddoesnotexist");
+    //     exit();
+    // }
     if (invalidProfileVisiblity($steamid) !== false) {
         header("location: ../components/signup.php?error=profilenotpublic");
         exit();

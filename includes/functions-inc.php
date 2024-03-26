@@ -1,5 +1,5 @@
 <?php
-
+include('../functions/steamapi/SteamAPI.class.php');
 function emptyInputSignup($username, $steamid, $pwd, $pwdConfirm, $terms)
 {
     $result = false;
@@ -60,28 +60,28 @@ function invalidSteamID($steamid)
 
     $validID = $steamAPI->steamIDExists($steamid);
 
-    if (!$validID) {
-        return true;
+    if ($validID === true) {
+        return false;
     }
 
-    return false;
+    return true;
 }
 
 function invalidProfileVisiblity($steamid)
 {
     $steamAPI = new SteamAPI();
 
-    $profileVisibility =  $steamAPI->isProfilePublic($steamid);
+    $profileVisibility = $steamAPI->isProfilePublic($steamid);
 
-    if (!$profileVisibility) {
-        return true;
+    if ($profileVisibility === true) {
+        return false;
     }
 
-    return false;
+    return true;
 }
 function userExists($conn, $username)
 {
-    $sql = "SELECT * FROM user WHERE userUid = ?;";
+    $sql = "SELECT * FROM user WHERE userUsername= ?;";
     $stmt = mysqli_stmt_init($conn);
 
     if (!mysqli_stmt_prepare($stmt, $sql)) {
@@ -121,4 +121,39 @@ function createUser($conn, $username, $steamid, $pwd, $terms)
 
     header("location: ../components/index.php");
     exit();
+}
+function emptyInputLogin($username, $pwd)
+{
+    $result = false;
+
+    if (empty($username) || empty($pwd)) {
+        $result = true;
+    }
+
+    return $result;
+}
+
+function loginUser($conn, $username, $pwd)
+{
+    $userIDExists = userExists($conn, $username);
+
+    if ($userIDExists === false) {
+        header("location: ../components/login.php?error=wronglogin");
+        exit();
+    }
+
+    $pwdHashed = $userIDExists["userPasswd"];
+
+    $checkPwd = password_verify($pwd, $pwdHashed);
+
+    if ($checkPwd === false) {
+        header("location: ../components/login.php?error=wrongpass");
+        exit();
+    } else if ($checkPwd === true) {
+        session_start();
+        $_SESSION["userID"] = $userIDExists["userID"];
+        $_SESSION["userUsername"] = $userIDExists["userUsername"];
+        header("location: ../components/index.php");
+        exit();
+    }
 }

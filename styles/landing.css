@@ -333,6 +333,7 @@ footer .cols .links-col a i {
   font-weight: 500;
   font-size: 1em;
   transition: background-color 0.3s ease;
+  margin-top: 20px;
 }
 
 .login-button:hover {
@@ -355,6 +356,9 @@ footer .cols .links-col a i {
 
 .login-register p a:hover {
   text-decoration: underline;
+}
+
+.error {
 }
 
 /*                                              SIGN UP PAGE                     */
@@ -405,7 +409,7 @@ footer .cols .links-col a i {
   margin: 30px 0;
 }
 
-.signup-input-box label {
+.signup-input-box input::placeholder {
   position: absolute;
   top: 50%;
   left: 5px;
@@ -496,4 +500,8 @@ footer .cols .links-col a i {
 .terms label input {
   accent-color: #271c19;
   margin-right: 3px;
+}
+
+.error-signup {
+  color: red;
 }

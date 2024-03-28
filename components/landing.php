@@ -34,7 +34,7 @@ include('landing/landingHeader.php');
     <div class="testimonial-card">
       <span><i class='bx bxs-quote-alt-left'></i></span>
       <p>
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui, odit.
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui, odit.hjghghghjghhhhhgjjggg.
       </p>
       <hr />
       <img src="../images/person2.jpeg" alt="User">
@@ -43,7 +43,7 @@ include('landing/landingHeader.php');
     <div class="testimonial-card">
       <span><i class='bx bxs-quote-alt-left'></i></span>
       <p>
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae eum odio iure est, cum illum?
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae eum odio iure est, cum illum.
       </p>
       <hr />
       <img src="../images/person3.jpg" alt="User">

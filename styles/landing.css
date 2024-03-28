@@ -21,9 +21,11 @@ body {
 /*                                                   HEADER                  */
 
 nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   background-color: #55423d;
-  padding: 5% 0;
-
+  padding: 20px 0px;
 }
 
 nav a {
@@ -33,31 +35,55 @@ nav a {
   transition: color 0.3s ease;
 }
 
-nav h2{
-  display: flex;
-  justify-content: center;
-}
 nav a:hover {
   color: #ffc0ad;
 }
 
+nav h2 {
+  margin-left: 120px;
+}
 
-nav ul{
+nav ul {
   display: flex;
-  justify-content: center;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  list-style: none;
-  padding:0;
-  margin:0 auto;
-  max-width: 80%;
 }
 
 nav li {
-  margin:10px;
+  list-style: none;
 }
 
+nav ul li {
+  margin-right: 20px;
+}
 
+@media screen and (max-width: 650px) {
+  nav {
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  
+  nav ul li:last-child{
+    margin-right: 120px;
+  }
+  nav h2 {
+    margin-left: 0;
+    margin-bottom: 20px;
+  }
+
+  nav ul {
+    margin-left: 0;
+  }
+  nav li{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  nav ul li:last-child {
+    margin-right: 0;
+  }
+}
 
 
 
@@ -72,23 +98,36 @@ nav li {
 }
 
 .landing-container img {
-  max-width: 25%;
-  height:auto;
-  margin-bottom:20px;
+  max-width: 50%; 
+  height: auto;
+  margin-bottom: 20px;
 }
 
 .landing-container h1 {
-  font-size: 4rem;
-  color: #fffffe; /* HEADLINE COLOUR */
+  font-size: 4rem; 
+  color: #fffffe; 
   margin-top: 2rem;
 }
 
 .landing-text-sub-headers h3 {
-  color: #fff3ec; /* SUB HEADLINE COLOUR */
+  color: #fff3ec; 
   text-align: center;
-  font-size: 2rem;
   margin-top: 10px;
 }
+
+
+@media screen and (max-width: 768px) {
+  .landing-container h1 {
+    font-size: 3rem; 
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .landing-container h1 {
+    font-size: 2rem; 
+  }
+}
+
 
 .register-button {
   margin-top: 50px;
@@ -142,18 +181,16 @@ nav li {
 
 .testimonial-grid {
   display: flex;
-  flex-wrap:wrap;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 2%; 
   margin-bottom: 2rem;
 }
 
 .testimonial-card {
-  display: flex;
-  flex-wrap: wrap;
-  flex-basis:auto;
-  max-width: 40%; 
-  margin:1cqmax;
+  flex: 1 1 40%; 
+  max-width: 40%;
+  margin: 1%;
   padding: 1%;
   background-color: #55423d;
   border-radius: 5px;
@@ -182,7 +219,7 @@ nav li {
   width: 60px;
   height: 60px;
   margin: auto;
-  border-radius: 100%;
+  border-radius: 75%;
   border: 1px solid #ffc0ad;
 }
 
@@ -197,6 +234,20 @@ nav li {
   color: #ffc0ad;
 }
 
+@media screen and (max-width: 768px) {
+  .testimonial-card {
+    max-width: 45%; 
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .testimonial-card {
+    max-width: 100%; 
+    margin:10px;
+  }
+}
+
+
 /*                                                        FOOTER                  */
 
 footer {
@@ -209,7 +260,9 @@ footer {
 footer .cols {
   display: flex;
   flex-wrap: wrap;
-  gap: 20%;
+  gap: 15%;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
 footer .cols > div {
@@ -245,6 +298,43 @@ footer .cols .links-col a i {
   font-size: 1.25rem;
 }
 
+
+@media screen and (max-width: 450px) {
+  footer .cols {
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    justify-self: center;
+    align-self: center;
+    padding-right: 20px;
+    padding-left: 20px;
+    gap: 2%;
+  }
+
+  footer .cols .about-cols h3,
+  footer .cols .links-col h4 {
+    display:grid;
+    justify-items: center;
+    font-size: 1rem;
+    color: #fff; 
+  }
+
+  footer .cols .about-cols p {
+    font-size: 0.8rem; 
+    color: #ccc; 
+  }
+  footer .cols .links-col {
+    text-align: center; 
+  }
+
+  footer .cols .links-col a {
+    font-size: 14px;   
+    text-align: center; 
+    color: #fff;   
+  }
+
+}
+
 /*                                                LOGIN                          */
 
 .login-page-wrapper {
@@ -277,7 +367,7 @@ footer .cols .links-col a i {
 
 .form-box h2 {
   font-size: 2rem;
-  color: #271c19; /* text inside registration */
+  color: #271c19; 
   text-align: center;
 }
 

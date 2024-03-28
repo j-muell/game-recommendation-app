@@ -45,9 +45,13 @@
 }
 
 .sidebar .sidebar-content {
-  /* background: red; */
   height: 100%;
-  padding-top: 30px;
+  padding: 30px 0 150px 0;
+  overflow: auto;
+}
+
+.sidebar .sidebar-content::-webkit-scrollbar {
+  display: none;
 }
 
 .sidebar .sidebar-content li {
@@ -64,7 +68,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 2px solid #271c19;
+  border-bottom: 1px solid #271c19;
 }
 
 .sidebar .sidebar-content li i {
@@ -74,6 +78,11 @@
   line-height: 50px;
   color: #fff3ec;
   font-size: 18px;
+  transition: all 0.3s ease;
+}
+
+.sidebar .sidebar-content li.showMenu i.arrow {
+  transform: rotate(-180deg);
 }
 
 .sidebar .sidebar-content li a {
@@ -92,7 +101,11 @@
   padding: 6px 6px 14px 80px;
   margin-top: -10px;
   background-color: #271c19;
-  /* display: none; */
+  display: none;
+}
+
+.sidebar .sidebar-content li.showMenu .sub-menu {
+  display: block;
 }
 
 .sidebar .sidebar-content li .sub-menu a {
@@ -134,4 +147,117 @@
   font-size: 16px;
   opacity: 1;
   display: block;
+}
+
+/*                  CATEGORY LINK */
+
+.sidebar .sidebar-content .separator {
+  position: relative;
+  list-style: none;
+  transition: none;
+}
+
+.sidebar .sidebar-content .separator:hover {
+  background-color: #55423d;
+}
+
+.sidebar .sidebar-content .separator i {
+  height: 50px;
+  min-width: 60px;
+  text-align: center;
+  line-height: 50px;
+  color: #fff3ec;
+  font-size: 18px;
+}
+
+.sidebar .sidebar-content .separator a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  cursor: default;
+}
+
+.sidebar .sidebar-content .separator a .link-name {
+  font-size: 16px;
+  font-weight: 400;
+  color: #fff3ec;
+}
+
+/*                                               INPUTS   */
+
+.genre-container label {
+  user-select: none;
+  width: 100%;
+  cursor: pointer;
+  color: #fff3ec;
+  font-weight: 300;
+  transition: all 0.3s ease;
+}
+
+.genre-container label:hover {
+  color: #ffc0ad;
+}
+
+.genre-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Add some separation between each .genre item */
+}
+
+.genre {
+  display: flex; /* Make each .genre item a flex container */
+  align-items: center; /* Center items vertically */
+}
+
+.genre input[type="checkbox"] {
+  margin-right: 1.5rem; /* Add some space between the checkbox and the label */
+}
+
+/* Optional: To align the checkboxes to the left of the sidebar */
+.genre input[type="checkbox"] {
+  margin-left: 23px; /* Adjust as needed */
+}
+
+/*                                                  PROFILE SECTION */
+
+.sidebar .profile-details {
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #271c19;
+  width: 260px;
+}
+
+.sidebar .profile-details img {
+  height: 52px;
+  width: 52px;
+  object-fit: cover;
+  border-radius: 16px;
+  margin: 0 14px 0 12px;
+  background: #271c19;
+  padding: 10px;
+}
+
+.sidebar .profile-details .steam-name {
+  color: #fff3ec;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.sidebar .profile-details a {
+  text-decoration: none;
+  color: #fff3ec;
+  margin: 5px 10px 0 10px;
+  text-wrap: wrap;
+}
+
+.sidebar .profile-details a i {
+  font-size: 18px;
+  transition: all 0.3s ease;
+}
+
+.sidebar .profile-details a i:hover {
+  color: #ffc0ad;
 }

@@ -11,10 +11,10 @@ class SteamAPI
 
 	public function __construct()
 	{
-		$config = parse_ini_file('config.ini');
+		$config = parse_ini_file('config.ini', true);
 
 
-		$api_key = $config['api_key'];
+		$api_key = $config['SteamAPI']['api_key'];
 		if (!empty($api_key)) {
 			$this->api_key = $api_key;
 		}

@@ -1,0 +1,5 @@
+IGDB: 
+
+Client ID: pvps6khswf4j4hyet20ctgyv2tb0z8
+
+Client Secret: op7ggzf8y0z3fyg5hfx64x23t3x3cr

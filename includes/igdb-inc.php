@@ -61,9 +61,9 @@ $builder = new IGDBQueryBuilder();
 */
 
 
-// This function will take a game name string and return the following data as an associative array:
+// This function will take a game name string and amount of games to find and return the following data as an associative array:
 
-function gameSearchForNameAndImage($gameString, $amountOfGames = 5)
+function gameSearchForNameAndImage($gameString, $amountOfGames)
 {
     global $igdb, $builder;
 
@@ -72,7 +72,7 @@ function gameSearchForNameAndImage($gameString, $amountOfGames = 5)
             ->search($gameString)
             ->fields("name, cover.*")
             ->where("category = 0")
-            ->limit($amountOfGames)
+            ->limit($amountOfGames + 1)
             ->build();
     } catch (IGDBInvalidParameterException $e) {
         echo $e->getMessage();
@@ -116,10 +116,87 @@ function gameSearchForNameAndImage($gameString, $amountOfGames = 5)
 }
 
 
-$results = gameSearchForNameAndImage("League Of Legends", 3);
+gameSteamAppIdIfExists("25076");
 // print_r($results);
 
-foreach ($results as $game) {
-    echo "<img src='{$game['Cover']}' />";
-    echo "Game Name: " . $game['Name'];
+// foreach ($results as $game) {
+//     echo "<img src='{$game['Cover']}' />";
+//     echo "Game Name: " . $game['Name'];
+// }
+
+/* 
+    With this function you can send eithe the game string itself or you can send in the game id to be used to query for the game.
+    This is not the app id. Can be used for very specific applications if you need to get specific games genres etc.
+    This is not meant for a mass search of games and their genres.
+*/
+
+function gameNameAndGenre($gameInput)
+{
+}
+
+/*
+    This function will take in the game id or gameString and check if the game exists on the steam store. If it does, it will return an app id for this game.
+    This function will be heavily used to check for games to display on the game recommendaton main page.
+*/
+
+function gameSteamAppIdIfExists($gameInput)
+{
+    global $igdb, $builder;
+
+    try {
+        if (is_numeric($gameInput)) {
+            $query = $builder
+                ->name("Steam App ID/Website link")
+                ->fields("websites.url, websites.category")
+                ->where("id = $gameInput")
+                ->where("websites.category = 13")
+                ->limit(2)
+                ->build();
+        } else {
+            $query = $builder
+                ->search($gameInput)
+                ->fields("websites.url, websites.category")
+                ->where("websites.category = 13")
+                ->limit(12)
+                ->build();
+        }
+    } catch (IGDBInvalidParameterException $e) {
+        echo $e->getMessage();
+    }
+
+    try {
+        $result = $igdb->game($query);
+    } catch (IGDBEndpointException $e) {
+        echo $e->getMessage();
+    }
+
+    $websiteUrls = [];
+
+    // print_r($result);
+
+    if (!empty($result)) {
+        foreach ($result as $game) {
+            foreach ($game->websites as $website) {
+                if ($website->category === 13) {
+                    array_push($websiteUrls, $website->url);
+                }
+            }
+        }
+    }
+
+    // print_r($websiteUrls);
+
+    $pattern = '/\d+/';
+
+    $appIds = [];
+
+    foreach ($websiteUrls as $url) {
+        preg_match($pattern, $url, $matches);
+
+        if (!empty($matches)) {
+            $appIds[] = $matches[0];
+        }
+    }
+
+    print_r($appIds);
 }

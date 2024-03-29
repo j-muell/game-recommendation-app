@@ -54,7 +54,7 @@ $igdb = new IGDB($client_id, $access_token);
 try {
     $query = $builder
         ->search("Overwatch")
-        ->fields("id, name, genres, websites")
+        ->fields("id, name, genres.name, websites")
         ->where("category = 0")
         ->limit(2)
         ->build();
@@ -63,13 +63,78 @@ try {
 }
 
 try {
-    $result = $igdb->game($builder);
+    $result = $igdb->game($query);
 } catch (IGDBEndpointException $e) {
     echo $e->getMessage();
 }
 
+// Example of getting something from inside the games, such as the name. Then we make a call to get the genre.
+
 if (!empty($result)) {
-    print_r($result);
+    foreach ($result as $game) {
+        echo "Game Name: " . $game->name . "<br>";
+        echo "Genres: ";
+        if (!empty($game->genres)) {
+            $genres = [];
+
+            foreach ($game->genres as $genre) {
+                $genres[] = $genre->name;
+            }
+
+            echo implode(", ", $genres);
+        } else {
+            echo "no genres found";
+        }
+        echo "<br><br>";
+    }
 } else {
-    echo "results was empty.";
+    echo "Result for games was empty.";
 }
+
+// function fetchGenreInfo($url, $access_token, $client_id)
+// {
+//     $curl = curl_init();
+
+//     $fieldsParameter = 'fields name,slug';
+
+//     $requestBody = $fieldsParameter . ';';
+
+//     curl_setopt_array($curl, array(
+//         CURLOPT_URL => $url,
+//         CURLOPT_RETURNTRANSFER => true,
+//         CURLOPT_POST => true,
+//         CURLOPT_POSTFIELDS => $requestBody,
+//         CURLOPT_HTTPHEADER => array(
+//             'Client-ID: ' . $client_id,
+//             'Authorization: Bearer ' . $access_token,
+//             'Content-Type: application/json'
+//         )
+//     ));
+
+//     $response = curl_exec($curl);
+//     var_dump($response);
+//     curl_close($curl);
+
+//     return $response;
+
+//     // $igdb = new IGDB($client_id, $access_token);
+
+//     // $builder = new IGDBQueryBuilder();
+
+//     // try {
+//     //     $query = $builder
+//     //         ->fields("name")
+//     //         ->limit(2)
+//     //         ->build();
+//     // } catch (IGDBInvalidParameterException $e) {
+//     //     echo $e->getMessage();
+//     // }
+
+//     // try {
+//     //     $result = $igdb->genre($genreId);
+//     // } catch (IGDBEndpointException $e) {
+//     //     echo $e->getMessage();
+//     // }
+
+//     // print_r($result);
+// }

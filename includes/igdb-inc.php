@@ -1,6 +1,21 @@
 <?php
+/*
+
+    LIST OF FUNCTIONS
+
+    gameSearchForNameAndImage($gameInput, $amountOfGames)           igdb
+    allGameInfo($gameID, $totalRatingRequest = 60, $limit = 1)      igdb
+    gameNameAndGenre($gameInput, $limit = 1)
+    getSteamAppIdIfExists($gameInput, $limit = 1)
+    getGameID($gameInput)                               returns igdb game id
+
+*/
+
 
 require_once "../functions/igdb/src/class.igdb.php";
+require_once "../functions/steamapi/SteamAPI.class.php";
+
+$steamAPI = new SteamAPI();
 $builder = new IGDBQueryBuilder();
 
 $config = parse_ini_file('config.ini', true);
@@ -61,19 +76,217 @@ $builder = new IGDBQueryBuilder();
 */
 
 
-// This function will take a game name string and amount of games to find and return the following data as an associative array:
+function retreiveGames($genre)
+{
+}
 
-function gameSearchForNameAndImage($gameString, $amountOfGames)
+
+// This function will return as string with echo content to display in a separate file. Takes game data, either igdb id or string.
+function displayTile($gameData)
+{
+
+    global $igdb, $builder, $steamAPI;
+
+    if (!empty($gameData)) {
+        try {
+            if (is_numeric($gameData)) {
+                $query = $builder
+                    ->fields("name, cover.*, genres.name, summary, total_rating")
+                    ->where("id = $gameData")
+                    ->where("category = 0")
+                    ->limit(1)
+                    ->build();
+            } else {
+                $query = $builder
+                    ->search($gameData)
+                    ->fields("name, cover.*, genres.name, summary, total_rating")
+                    ->where("category = 0")
+                    ->limit(1)
+                    ->build();
+            }
+        } catch (IGDBInvalidParameterException $e) {
+            echo $e->getMessage();
+        }
+
+        try {
+            $result = $igdb->game($query);
+        } catch (IGDBEndpointException $e) {
+            echo $e->getMessage();
+        }
+
+        $finalArray = array();
+
+        if (!empty($result)) {
+            foreach ($result as $game) {
+
+                $total_rating = number_format($game->total_rating, 1);
+                $summary = isset($game->summary) ? $game->summary : '';
+
+                if (!empty($game->genres)) {
+                    $genres = [];
+
+                    foreach ($game->genres as $genre) {
+                        $genres[] = $genre->name;
+                    }
+
+                    $genres = implode(", ", $genres);
+                } else {
+                    continue;
+                }
+
+
+                if (isset($game->cover)) {
+                    $cover = $game->cover;
+                    $width = $cover->width;
+                    $imgId = $cover->image_id;
+
+                    $url = 'https://images.igdb.com/igdb/image/upload/t_';
+
+                    if ($width === 1920) {
+                        $url .= '1080p/';
+                    } else {
+                        $url .= 'cover_big/';
+                    }
+
+                    $url .= $imgId . '.jpg';
+                }
+
+                $finalArray[] = array(
+                    'name' => $game->name,
+                    'cover' => $url,
+                    'totalRating' => $total_rating,
+                    'summary' => $summary,
+                    'genres' => $genres
+                );
+            }
+        }
+    }
+
+
+    $name = $finalArray[0]['name'];
+    $pic = $finalArray[0]['cover'];
+    $rating = $finalArray[0]['totalRating'];
+    $summary = $finalArray[0]['summary'];
+    $genres = $finalArray[0]['genres'];
+
+    $igdbId = getGameID($name);
+    $steamId = getSteamAppIdIfExists($igdbId);
+    $steamId = $steamId[0];
+
+    $gamePrice = $steamAPI->GetGamePrice($steamId, ['ca']);
+
+    if (empty($gamePrice)) {
+        $gamePrice = "Free";
+    } else {
+        $gamePrice = "CDN $" . number_format($gamePrice[0]['final'] / 100, 2);
+    }
+
+    // $html = "<div class='grid-container'>";
+    $html = "<div class='tile-wrapper'>";
+    $html .= "<div class='topper'>";
+    $html .= "<img src='{$pic}'>";
+    $html .= "<div class='title-rating-price'>";                   // this div will be flex row
+    $html .= "<h3 class='game-title'>{$name}</h3>";
+    $html .= "<h5 class='game-rating'>Average Rating: {$rating}</h5>";
+    $html .= "<h5 class='game-price'>{$gamePrice}</h5>";
+    $html .= "</div>";
+    $html .= "</div>";
+    $html .= "<p class='genre-list'>{$genres}</p>";
+    $html .= "<p class='summary'>{$summary}</p>";
+    $html .= "</div>";
+    // $html .= "</div>";
+
+    $styles = "
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+            * {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            }
+
+            .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* Three columns */
+            gap: 20px; /* Gap between tiles */
+            }
+
+            .game-title {
+            font-weight: 500;
+            color: #ffc0ad;
+            }
+
+            .topper {
+            display: flex;
+            }
+
+            .tile-wrapper {
+            background: #55423d;
+            border-radius: 16px;
+            padding: 1.25rem;
+            margin: 1rem;
+            }
+
+            .topper img {
+            border-radius: 1rem;
+            margin-bottom: 6px;
+            }
+
+            .title-rating-price {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 50px;
+            color: #fff3ec;
+            }
+
+            .summary,
+            .genre-list {
+            color: #fff3ec;
+            }
+
+            .genre-list {
+            text-decoration: underline;
+            }
+
+            .summary {
+            font-size: 14px;
+            }
+
+            .game-rating,
+            .game-price {
+            font-weight: 400;
+            }
+
+        </style>
+    ";
+
+    return $html;
+}
+
+// This function will take a game name string and amount of games to find and return the following data as an associative array:
+function gameSearchForNameAndImage($gameInput, $amountOfGames = 1)
 {
     global $igdb, $builder;
 
     try {
-        $query = $builder
-            ->search($gameString)
-            ->fields("name, cover.*")
-            ->where("category = 0")
-            ->limit($amountOfGames + 1)
-            ->build();
+        if (is_numeric($gameInput)) {
+            $query = $builder
+                ->fields("name, cover.*")
+                ->where("id = $gameInput")
+                ->where("category = 0")
+                ->limit($amountOfGames)
+                ->build();
+        } else {
+            $query = $builder
+                ->search($gameInput)
+                ->fields("name, cover.*")
+                ->where("category = 0")
+                ->limit($amountOfGames)
+                ->build();
+        }
     } catch (IGDBInvalidParameterException $e) {
         echo $e->getMessage();
     }
@@ -116,7 +329,24 @@ function gameSearchForNameAndImage($gameString, $amountOfGames)
 }
 
 
-gameSteamAppIdIfExists("25076");
+// $gameid = getGameID("Hollow Knight");
+// $gameinfo = allGameInfo($gameid, 1);
+// $steamid = getSteamAppIdIfExists($gameid);
+// $gamenamePics = gameSearchForNameAndImage($gameid);
+// $gameGenres = gameInfo($gameid);
+
+// echo "<img src='" . $gamenamePics[0]['Cover'] . "' alt='" . $gamenamePics[0]['Name'] . "'>";
+// echo "<br><br>";
+// print_r($gamenamePics);
+
+// echo "<br><br><br>";
+// print_r($gameinfo);
+// echo "<br><br>";
+// print_r($steamid);
+// echo "<br><br>";
+// print_r($gameGenres[0]['genres']);
+
+// print_r($results);
 // print_r($results);
 
 // foreach ($results as $game) {
@@ -124,22 +354,141 @@ gameSteamAppIdIfExists("25076");
 //     echo "Game Name: " . $game['Name'];
 // }
 
+/*
+    This function, when given an igdb app id, will return all game info relevant to GameQuest any way that is not accessed in other functions
+    player_perspectives.name, similar_games.name, 
+    total_rating, websites, cover.*
+*/
+
+function allGameInfo($gameID, $totalRatingRequest = 60, $limit = 1)
+{
+    global $igdb, $builder;
+
+    try {
+        $query = $builder
+            ->fields("player_perspectives.name, similar_games, total_rating")
+            ->where("id = $gameID")
+            ->where("category = 0")
+            ->limit(1)
+            ->build();
+    } catch (IGDBInvalidParameterException $e) {
+        echo $e->getMessage();
+    }
+
+    try {
+        $result = $igdb->game($query);
+    } catch (IGDBInvalidParameterException $e) {
+        echo $e->getMessage();
+    }
+
+    // var_dump($result);
+
+    $finalArray = array();
+
+    if (!empty($result)) {
+        foreach ($result as $game) {
+            $similarGames = $game->similar_games;
+            $totalRating = $game->total_rating;
+
+            $similarGamesFinal = [];
+            if (!empty($similarGames)) {
+                foreach ($similarGames as $similarGame) {
+                    $similarGamesFinal[] = $similarGame;
+                }
+            }
+
+            foreach ($game->player_perspectives as $perspective) {
+                $gamePerspective = $perspective->name;
+            }
+
+            $finalArray[] = array(
+                'similar_games' => $similarGamesFinal,
+                'total_rating' => $totalRating,
+                'player_perspective' => $gamePerspective
+            );
+        }
+    }
+
+    return $finalArray;
+}
+
 /* 
     With this function you can send eithe the game string itself or you can send in the game id to be used to query for the game.
     This is not the app id. Can be used for very specific applications if you need to get specific games genres etc.
-    This is not meant for a mass search of games and their genres.
+    Also will return summary information.
 */
 
-function gameNameAndGenre($gameInput)
+function gameInfo($gameInput, $limit = 1)
 {
+    global $igdb, $builder;
+
+
+
+    try {
+        if (is_numeric($gameInput)) {
+            $query = $builder
+                ->name("Game and Genre")
+                ->fields("id, name, summary, genres.name")
+                ->where("id = $gameInput")
+                ->where("category = 0")
+                ->limit($limit)
+                ->build();
+        } else {
+            $query = $builder
+                ->search("$gameInput")
+                ->fields("id, name, summary, genres.name")
+                ->where("category = 0")
+                ->limit($limit)
+                ->build();
+        }
+    } catch (IGDBInvalidParameterException $e) {
+        echo $e->getMessage();
+    }
+
+    try {
+        $result = $igdb->game($query);
+    } catch (IGDBEndpointException $e) {
+        echo $e->getMessage();
+    }
+
+    $finalArray = array();
+
+    if (!empty($result)) {
+        foreach ($result as $game) {
+            $gameName = $game->name;
+            $summary = isset($game->summary) ? $game->summary : '';
+
+            if (!empty($game->genres)) {
+                $genres = [];
+
+                foreach ($game->genres as $genre) {
+                    $genres[] = $genre->name;
+                }
+
+                $genres = implode(", ", $genres);
+            } else {
+                continue;
+            }
+
+            $finalArray[] = array(
+                "gameName" => $gameName,
+                "genres" => $genres,
+                "summary" => $summary
+            );
+        }
+    }
+
+    return $finalArray;
 }
 
 /*
     This function will take in the game id or gameString and check if the game exists on the steam store. If it does, it will return an app id for this game.
+    For accuracy, send the actual game id from igdb, otherwise its possible it can return a game you may not want. For this reason, you can also add a limit
+    if you want to. By default, limit is 1.
     This function will be heavily used to check for games to display on the game recommendaton main page.
 */
 
-function gameSteamAppIdIfExists($gameInput)
+function getSteamAppIdIfExists($gameInput, $limit = 1)
 {
     global $igdb, $builder;
 
@@ -150,14 +499,14 @@ function gameSteamAppIdIfExists($gameInput)
                 ->fields("websites.url, websites.category")
                 ->where("id = $gameInput")
                 ->where("websites.category = 13")
-                ->limit(2)
+                ->limit($limit)
                 ->build();
         } else {
             $query = $builder
                 ->search($gameInput)
                 ->fields("websites.url, websites.category")
                 ->where("websites.category = 13")
-                ->limit(12)
+                ->limit($limit)
                 ->build();
         }
     } catch (IGDBInvalidParameterException $e) {
@@ -198,5 +547,39 @@ function gameSteamAppIdIfExists($gameInput)
         }
     }
 
-    print_r($appIds);
+    return $appIds;
+}
+
+/*
+    The purpose of this function is to be only a getter and return the igdb game id. It will take only a string and return a single result. Be sure to check that
+    you have received the correct game id for the correct game.
+*/
+
+function getGameID($gameInput)
+{
+    global $igdb, $builder;
+
+    try {
+        $query = $builder
+            ->search("$gameInput")
+            ->fields("id")
+            ->limit(1)
+            ->build();
+    } catch (IGDBInvalidParameterException $e) {
+        echo $e->getMessage();
+    }
+
+    try {
+        $result = $igdb->game($query);
+    } catch (IGDBEndpointException $e) {
+        echo $e->getMessage();
+    }
+
+    $gameID = null;
+
+    if (!empty($result[0])) {
+        $gameID = $result[0]->id;
+    }
+
+    return $gameID;
 }

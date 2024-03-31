@@ -36,7 +36,7 @@ foreach ($results as $player) {
 </head>
 
 <body>
-    <div class="sidebar">
+    <div class="sidebar open">
         <div class="logo-details">
             <i class='bx bx-dice-6'></i>
             <a href="index.php">
@@ -149,4 +149,32 @@ foreach ($results as $player) {
             <a href="../includes/logout.inc.php"><i class="bx bx-log-out"></i></a>
         </div>
 
+    </div>
+
+    <div class="sidebar-mini close">
+        <div class="logo-details">
+            <i class='bx bx-menu' id="minisidebar"></i>
+        </div>
+
+        <ul class="sidebar-content close">
+            <li class="info-link">
+                <div class="icon-link">
+                    <a href="#">
+                        <i class='bx bx-info-square'></i>
+                    </a>
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="link-name" href="#">About</a></li>
+                    <li><a href="#">How to use</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Wish-list</a></li>
+                </ul>
+            </li>
+        </ul>
+        <div class="profile-details">
+            <div class="profile-content">
+                <img src="<?php echo $avatarLink ?>" alt="Avatar">
+            </div>
+            <a href="../includes/logout.inc.php"><i class="bx bx-log-out"></i></a>
+        </div>
     </div>

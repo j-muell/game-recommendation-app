@@ -526,3 +526,12 @@ body {
 .sidebar-mini .profile-details a i:hover {
   color: #ffc0ad;
 }
+
+/* Search container css */
+
+.search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}

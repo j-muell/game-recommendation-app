@@ -12,28 +12,28 @@ require_once "../includes/igdb-inc.php";
 // testing some functions to see the functionality
 
 $tileDisplayOne = displayTile("Red Dead Redemption 2");
-// $tileDisplayTwo = displayTile("Hollow Knight");
-// $tileDisplayThree = displayTile("Overwatch");
-// $tileDisplayFour = displayTile("Counter-Strike 2");
-// $tileDisplayFive = displayTile("Paladins");
-// $tileDisplaySix = displayTile("Dragons Dogma");
-// $tileDisplaySeven = displayTile("Sons of the Forest");
-// $tileDisplayEight = displayTile("Binding of Isaac");
-// $tileDisplayNine = displayTile("Elden Ring");
+$tileDisplayTwo = displayTile("Hollow Knight");
+$tileDisplayThree = displayTile("Overwatch");
+$tileDisplayFour = displayTile("Counter-Strike 2");
+$tileDisplayFive = displayTile("Paladins");
+$tileDisplaySix = displayTile("Dragons Dogma");
+$tileDisplaySeven = displayTile("Sons of the Forest");
+$tileDisplayEight = displayTile("Binding of Isaac");
+$tileDisplayNine = displayTile("Elden Ring");
 
 ?>
 <div class="background">
     <div class="grid-container">
         <?php
         echo $tileDisplayOne;
-        // echo $tileDisplayTwo;
-        // echo $tileDisplayThree;
-        // echo $tileDisplayFour;
-        // echo $tileDisplayFive;
-        // echo $tileDisplaySix;
-        // echo $tileDisplaySeven;
-        // echo $tileDisplayEight;
-        // echo $tileDisplayNine;
+        echo $tileDisplayTwo;
+        echo $tileDisplayThree;
+        echo $tileDisplayFour;
+        echo $tileDisplayFive;
+        echo $tileDisplaySix;
+        echo $tileDisplaySeven;
+        echo $tileDisplayEight;
+        echo $tileDisplayNine;
 
         ?>
     </div>

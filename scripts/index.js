@@ -25,40 +25,18 @@ sideBarBtn.parentElement.addEventListener("click", () => {
 });
 
 sideBarBtnMini.parentElement.addEventListener("click", () => {
-  console.log("clicked");
   sideBarMini.classList.toggle("open");
   sideBarMini.classList.toggle("close");
   sideBar.classList.toggle("close");
   sideBar.classList.toggle("open");
+  // if (window.innerWidth < 780) {
+  //   sideBar.style.backdropFilter = "blur(20px)";
+  //   sideBar.style.boxShadow = "0 0 30px rgba(0, 0, 0, 0.5)";
+  // } else {
+  //   sideBar.style.backdropFilter = "";
+  //   sideBar.style.boxShadow = "";
+  // }
 });
-
-// window.addEventListener("resize", () => {
-//   if (window.innerWidth < 780) {
-//     if (sideBar.classList.contains("open")) {
-//       sideBar.classList.remove("open");
-//       sideBar.classList.add("close");
-//     }
-
-//     if (sideBarMini.classList.contains("close")) {
-//       sideBarMini.classList.remove("close");
-//       sideBarMini.classList.add("open");
-//     }
-//   }
-// });
-
-// window.addEventListener("resize", () => {
-//   if (window.innerWidth > 780) {
-//     if (sideBar.classList.contains("close")) {
-//       sideBar.classList.remove("close");
-//       sideBar.classList.add("open");
-//     }
-
-//     if (sideBarMini.classList.contains("open")) {
-//       sideBarMini.classList.remove("open");
-//       sideBarMini.classList.add("close");
-//     }
-//   }
-// });
 
 let wasLessThan780 = window.innerWidth < 780;
 

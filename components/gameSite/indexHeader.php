@@ -8,6 +8,18 @@ if (!isset($_SESSION["userID"])) // checks is userID is set. This is not usernam
 
 include("../functions/steamapi/SteamAPI.class.php");
 
+$steamAPI = new SteamAPI();
+
+if (isset($_SESSION["userSteamID"])) {
+    $results = $steamAPI->GetPlayerInfo($_SESSION["userSteamID"]);
+}
+
+foreach ($results as $player) {
+    $steamName = $player['personaname'];
+    $avatarLink = $player['avatar'];
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -16,7 +28,8 @@ include("../functions/steamapi/SteamAPI.class.php");
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../styles/index.css" />
+    <link rel="stylesheet" href="../styles/indexSidebar.css" />
+    <link rel="stylesheet" href="../../styles/index.css">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <script src="../scripts/index.js" defer></script>
     <title>GameQuest</title>
@@ -29,7 +42,9 @@ include("../functions/steamapi/SteamAPI.class.php");
             <a href="index.php">
                 <span class="logo-name">GameQuest</span>
             </a>
-
+            <div class="menu-collapse">
+                <i class='bx bx-menu'></i>
+            </div>
         </div>
         <ul class="sidebar-content">
             <!-- entire sidebar exists inside this -->
@@ -37,7 +52,7 @@ include("../functions/steamapi/SteamAPI.class.php");
                 <div class="icon-link">
                     <a href="#">
                         <i class='bx bx-info-square'></i>
-                        <span class="link-name">GameQuest Info</span>
+                        <span class="link-name">Info & Wishlist</span>
                     </a>
                     <i class='bx bxs-chevron-down arrow'></i>
                 </div>
@@ -45,6 +60,7 @@ include("../functions/steamapi/SteamAPI.class.php");
                     <li><a class="link-name" href="#">About</a></li>
                     <li><a href="#">How to use</a></li>
                     <li><a href="#">Contact</a></li>
+                    <li><a href="#">Wish-list</a></li>
                 </ul>
             </li>
             <li class="separator">
@@ -115,16 +131,20 @@ include("../functions/steamapi/SteamAPI.class.php");
                         <input type="checkbox" name="deckbuilder" id="deckbuilder">
                         <label for="deckbuilder">Deckbuilder</label>
                     </li>
+                    <li class="genre">
+                        <input type="checkbox" name="strategy" id="strategy">
+                        <label for="strategy">Strategy</label>
+                    </li>
                 </ul>
             </form>
         </ul>
 
         <div class="profile-details">
             <div class="profile-content">
-                <img src="../images/person1.jpg" alt="placeholder">
+                <img src="<?php echo $avatarLink ?>" alt="Avatar">
             </div>
             <div class="details">
-                <div class="steam-name">Shogun Freezie</div> <!-- This will grab steam name in the future.-->
+                <div class="steam-name"><?php echo $steamName ?></div> <!-- This will grab steam name in the future.-->
             </div>
             <a href="../includes/logout.inc.php"><i class="bx bx-log-out"></i></a>
         </div>

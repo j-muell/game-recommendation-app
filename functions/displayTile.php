@@ -20,7 +20,7 @@ $tileDisplayFour = displayTile("Counter-Strike 2");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game Tiles</title>
-    <link rel="stylesheet" href="../styles/tile.css">
+    <!-- <link rel="stylesheet" href="../styles/tile.css"> -->
 </head>
 
 <body>

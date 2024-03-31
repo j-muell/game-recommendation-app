@@ -153,6 +153,7 @@ function loginUser($conn, $username, $pwd)
         session_start();
         $_SESSION["userID"] = $userIDExists["userUid"];
         $_SESSION["userUsername"] = $userIDExists["userUsername"];
+        $_SESSION["userSteamID"] = $userIDExists["userSteamID"];
         header("location: ../components/index.php");
         exit();
     }

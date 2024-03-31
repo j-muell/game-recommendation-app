@@ -80,8 +80,12 @@ function retreiveGames($genre)
 {
 }
 
+/*
+    This function will return as string with echo content to display in a separate file. Takes game data, either igdb id or string.
+    The intended purpose of this function is to take the results from the game algorithm and send in the
+    app ids from igdb into this to get the tile information and display the game content on the main page.
 
-// This function will return as string with echo content to display in a separate file. Takes game data, either igdb id or string.
+*/
 function displayTile($gameData)
 {
 
@@ -112,6 +116,9 @@ function displayTile($gameData)
             $result = $igdb->game($query);
         } catch (IGDBEndpointException $e) {
             echo $e->getMessage();
+        }
+
+        if (!empty($result)) {
         }
 
         $finalArray = array();
@@ -201,69 +208,76 @@ function displayTile($gameData)
             @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
             * {
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 0;
-            }
-
-            .grid-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr); /* Three columns */
-            gap: 20px; /* Gap between tiles */
-            }
-
-            .game-title {
-            font-weight: 500;
-            color: #ffc0ad;
-            }
-
-            .topper {
-            display: flex;
-            }
-
-            .tile-wrapper {
-            background: #55423d;
-            border-radius: 16px;
-            padding: 1.25rem;
-            margin: 1rem;
-            }
-
-            .topper img {
-            border-radius: 1rem;
-            margin-bottom: 6px;
-            }
-
-            .title-rating-price {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 50px;
-            color: #fff3ec;
-            }
-
-            .summary,
-            .genre-list {
-            color: #fff3ec;
-            }
-
-            .genre-list {
-            text-decoration: underline;
-            }
-
-            .summary {
-            font-size: 14px;
-            }
-
-            .game-rating,
-            .game-price {
-            font-weight: 400;
-            }
+                font-family: 'Poppins', sans-serif;
+                margin: 0;
+                padding: 0;
+              }
+              
+              .grid-container {
+                display: grid;
+                grid-template-columns: repeat(
+                  auto-fit,
+                  minmax(400px, 1fr)
+                ); /* Three columns */
+                gap: 0px; /* Gap between tiles */
+                max-width: 86%;
+                float: right;
+              }
+              
+              .game-title {
+                font-weight: 500;
+                color: #ffc0ad;
+              }
+              
+              .topper {
+                display: flex;
+              }
+              
+              .tile-wrapper {
+                background: #55423d;
+                border-radius: 16px;
+                padding: 1.25rem;
+                margin: 1rem;
+                max-width: 400px;
+              }
+              
+              .topper img {
+                border-radius: 1rem;
+                margin-bottom: 6px;
+                width: calc(100% / 3 - 20px);
+              }
+              
+              .title-rating-price {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 25px;
+                color: #fff3ec;
+              }
+              
+              .summary,
+              .genre-list {
+                color: #fff3ec;
+              }
+              
+              .genre-list {
+                text-decoration: underline;
+              }
+              
+              .summary {
+                font-size: 14px;
+              }
+              
+              .game-rating,
+              .game-price {
+                font-weight: 400;
+              }
 
         </style>
     ";
 
-    return $html;
+    return $html . $styles;
 }
 
 // This function will take a game name string and amount of games to find and return the following data as an associative array:

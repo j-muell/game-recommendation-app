@@ -255,6 +255,7 @@ footer {
   background: #55423d;
   padding: 4% 0 6% 0;
   width: 100%;
+  margin-top: 100px;
 }
 
 footer .cols {
@@ -617,4 +618,16 @@ footer .cols .links-col a i {
   flex-direction: column;
   align-items: center;
   text-align: center;
+}
+
+.how-to-use-steps-container ul{
+  border: 1px solid #ccc;
+  padding-right: 25%;
+  padding-left: 25%;
+  margin: 10px;
+  color: white;
+  list-style: none;
+}
+.how-to-use-steps-container li{
+  padding: 10px;
 }

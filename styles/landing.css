@@ -1,0 +1,504 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+/* 
+    Name: Jason Mueller
+    File: landing.css
+    Date: 2024-03-23
+    Purpose: stylesheet for the main landing page of GameQuest & the login and register pages.
+*/
+
+* {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #271c19;
+  min-height: 100vh;
+}
+
+/*                                                   HEADER                  */
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #55423d;
+  padding: 20px 0px;
+}
+
+nav a {
+  color: #fffffe;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+nav a:hover {
+  color: #ffc0ad;
+}
+
+nav h2 {
+  margin-left: 120px;
+}
+
+nav ul {
+  display: flex;
+}
+
+nav li {
+  list-style: none;
+}
+
+nav ul li {
+  margin-right: 20px;
+}
+
+nav ul li:last-child {
+  margin-right: 120px;
+}
+
+.landing-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  flex: 1;
+}
+
+.landing-container img {
+  width: 400px;
+}
+
+.landing-container h1 {
+  font-size: 4rem;
+  color: #fffffe; /* HEADLINE COLOUR */
+  margin-top: 2rem;
+}
+
+.landing-text-sub-headers h3 {
+  color: #fff3ec; /* SUB HEADLINE COLOUR */
+  text-align: center;
+  font-size: 2rem;
+  margin-top: 10px;
+}
+
+.register-button {
+  margin-top: 50px;
+  padding: 10px;
+  border: 2px solid #140d0b;
+  border-radius: 6px;
+  background-color: #271c19;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.register-button a {
+  text-decoration: none;
+  color: #fff3ec;
+  font-size: 1.25rem;
+  letter-spacing: 2px;
+}
+
+.register-button:hover {
+  background-color: #55423d;
+}
+
+/*                                                        TESTIMONIAL              */
+
+.testimonial-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  margin-top: 50px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.testimonial-header {
+  margin-bottom: 2rem;
+}
+
+.testimonial-header h5 {
+  color: #fff3ec;
+  letter-spacing: 2px;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.testimonial-header p {
+  margin-top: 20px;
+  color: #fffffe;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.testimonial-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.testimonial-card {
+  padding: 2rem;
+  display: grid;
+  gap: 1rem;
+  background-color: #55423d;
+  border-radius: 5px;
+  box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.testimonial-card i {
+  font-size: 2.5rem;
+  color: #ffc0ad;
+}
+
+.testimonial-card p {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #fff3ec;
+}
+
+.testimonial-card hr {
+  width: 40px;
+  margin: auto;
+  color: green;
+}
+
+.testimonial-card img {
+  width: 60px;
+  height: 60px;
+  margin: auto;
+  border-radius: 100%;
+  border: 1px solid #ffc0ad;
+}
+
+.testimonial-card .testimonial-name {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: ghostwhite;
+  transition: 0.3s;
+}
+
+.testimonial-card .testimonial-name:hover {
+  color: #ffc0ad;
+}
+
+/*                                                        FOOTER                  */
+
+footer {
+  position: relative;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #55423d;
+  padding: 25px 0 40px 0;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+footer .cols {
+  display: flex;
+  gap: 32rem;
+}
+
+footer .cols > div {
+  flex: 14;
+  margin: 0 10px;
+}
+
+footer .cols .about-cols h3,
+footer .cols .links-col h4 {
+  color: #fffffe;
+  margin-bottom: 0.5rem;
+}
+
+footer .cols .about-cols p {
+  color: #fff3ec;
+  font-size: 0.75rem;
+}
+
+footer .cols .links-col a {
+  display: block;
+  text-decoration: none;
+  color: #fff3ec;
+  font-size: 14px;
+  line-height: 26px;
+  transition: color 0.3s ease;
+}
+
+footer .cols .links-col a:hover {
+  color: #ffc0ad;
+}
+
+footer .cols .links-col a i {
+  font-size: 1.25rem;
+}
+
+/*                                                LOGIN                          */
+
+.login-page-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: url("/game-recommendation-app/images/mountain2.jpg");
+  background-size: cover;
+}
+
+.login-section-wrapper {
+  position: relative;
+  width: 500px;
+  height: 540px;
+  background: transparent;
+  border: 2px solid #ffc0ad;
+  border-radius: 20px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-section-wrapper .form-box {
+  width: 100%;
+  padding: 50px;
+}
+
+.form-box h2 {
+  font-size: 2rem;
+  color: #271c19; /* text inside registration */
+  text-align: center;
+}
+
+.login-input-box {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  border-bottom: 2px solid #271c19;
+  margin: 30px 0;
+}
+
+.login-input-box label {
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  font-size: 1em;
+  color: #271c19;
+  font-weight: 500;
+  pointer-events: none;
+  transition: 0.5s;
+}
+
+.login-input-box input:focus ~ label,
+.login-input-box input:valid ~ label {
+  top: -5px;
+}
+
+.login-input-box input {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 1em;
+  color: #271c19;
+  font-weight: 600;
+}
+
+.login-input-box .icon {
+  position: absolute;
+  right: 8px;
+  font-size: 1.2em;
+  color: #271c19;
+  line-height: 57px;
+}
+
+.login-button {
+  width: 100%;
+  justify-self: center;
+  height: 45px;
+  background-color: #55423d;
+  border: none;
+  outline: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #271c19;
+  font-weight: 500;
+  font-size: 1em;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+}
+
+.login-button:hover {
+  background-color: #ffc0ad;
+}
+
+.login-register {
+  font-size: 0.9em;
+  color: #271c19;
+  text-align: center;
+  font-weight: 500;
+  margin: 25px 0 10px;
+}
+
+.login-register p a {
+  color: #271c19;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.login-register p a:hover {
+  text-decoration: underline;
+}
+
+/*                                              SIGN UP PAGE                     */
+
+.signup-page-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: url("/game-recommendation-app/images/mountain2.jpg");
+  background-size: cover;
+}
+
+.signup-section-wrapper {
+  position: relative;
+  width: 500px;
+  height: 540px;
+  background: transparent;
+  border: 2px solid #ffc0ad;
+  border-radius: 20px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.signup-section-wrapper .form-box {
+  width: 100%;
+  padding: 50px;
+}
+
+.form-box h2 {
+  font-size: 2rem;
+  color: #271c19; /* text inside registration */
+  text-align: center;
+}
+
+.signup-input-box:first-of-type {
+  margin: 0;
+}
+
+.signup-input-box {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  border-bottom: 2px solid #271c19;
+  margin: 30px 0;
+}
+
+.signup-input-box input::placeholder {
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  font-size: 1em;
+  color: #271c19;
+  font-weight: 500;
+  pointer-events: none;
+  transition: 0.5s;
+}
+
+.signup-input-box input:focus ~ label,
+.signup-input-box input:valid ~ label {
+  top: -5px;
+}
+
+.signup-input-box input {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 1em;
+  color: #271c19;
+  font-weight: 600;
+}
+
+.signup-input-box .icon {
+  position: absolute;
+  right: 8px;
+  font-size: 1.2em;
+  color: #271c19;
+  line-height: 57px;
+}
+
+.signup-button {
+  width: 100%;
+  justify-self: center;
+  height: 45px;
+  background-color: #55423d;
+  border: none;
+  outline: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #271c19;
+  font-weight: 500;
+  font-size: 1em;
+  transition: background-color 0.3s ease;
+}
+
+.signup-button:hover {
+  background-color: #ffc0ad;
+}
+
+.signup-register {
+  font-size: 0.9em;
+  color: #271c19;
+  text-align: center;
+  font-weight: 500;
+  margin: 25px 0 10px;
+}
+
+.signup-register p a {
+  color: #271c19;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.signup-register p a:hover {
+  text-decoration: underline;
+}
+
+#question {
+  text-decoration: none;
+  color: #271c19;
+}
+
+.terms {
+  font-size: 0.9em;
+  color: #271c19;
+  font-weight: 500;
+  margin: -15px 0 15px;
+  display: flex;
+  justify-content: flex-start;
+  padding-top: 20px;
+}
+
+.terms label input {
+  accent-color: #271c19;
+  margin-right: 3px;
+}
+
+.error-signup {
+  color: red;
+}

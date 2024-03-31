@@ -98,7 +98,7 @@ nav ul li {
 }
 
 .landing-container img {
-  max-width: 50%; 
+  width: 400px; 
   height: auto;
   margin-bottom: 20px;
 }
@@ -117,6 +117,9 @@ nav ul li {
 
 
 @media screen and (max-width: 768px) {
+  .landing-container img{
+    width: 200px;
+  }
   .landing-container h1 {
     font-size: 3rem; 
   }
@@ -252,23 +255,24 @@ nav ul li {
 
 footer {
   position: relative;
-  background: #55423d;
-  padding: 4% 0 6% 0;
-  width: 100%;
-  margin-top: 100px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #55423d;
+    padding: 25px 0 40px 0;
+    display: flex;
+    justify-content: center;
+    width: 100%;
 }
 
 footer .cols {
   display: flex;
-  flex-wrap: wrap;
-  gap: 15%;
-  margin-left: 5%;
-  margin-right: 5%;
+  gap: 32rem;
 }
 
 footer .cols > div {
-  flex: 1;
-  margin: 0 1%;
+  flex: 14;
+  margin: 0 10px;
 }
 
 footer .cols .about-cols h3,
@@ -298,8 +302,28 @@ footer .cols .links-col a:hover {
 footer .cols .links-col a i {
   font-size: 1.25rem;
 }
-
-
+@media screen and (max-width : 1350px){
+  footer {
+    position: relative;
+    background: #55423d;
+    padding: 4% 0 6% 0;
+    width: 100%;
+    margin-top: 100px;
+  }
+  
+  footer .cols {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15%;
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+  
+  footer .cols > div {
+    flex: 1;
+    margin: 0 1%;
+  }
+}
 @media screen and (max-width: 450px) {
   footer .cols {
     display: grid;

@@ -34,7 +34,7 @@ include('landing/landingHeader.php');
     <div class="testimonial-card">
       <span><i class='bx bxs-quote-alt-left'></i></span>
       <p>
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui, odit.hjghghghjghhhhhgjjggg.
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui, odit.
       </p>
       <hr />
       <img src="../images/person2.jpeg" alt="User">

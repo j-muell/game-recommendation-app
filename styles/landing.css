@@ -62,8 +62,8 @@ nav ul li {
     justify-content: space-between;
     padding: 20px;
   }
-  
-  nav ul li:last-child{
+
+  nav ul li:last-child {
     margin-right: 120px;
   }
   nav h2 {
@@ -74,8 +74,8 @@ nav ul li {
   nav ul {
     margin-left: 0;
   }
-  nav li{
-    display:flex;
+  nav li {
+    display: flex;
     flex-direction: column;
     justify-content: center;
   }
@@ -84,8 +84,6 @@ nav ul li {
     margin-right: 0;
   }
 }
-
-
 
 .landing-container {
   display: flex;
@@ -98,39 +96,37 @@ nav ul li {
 }
 
 .landing-container img {
-  width: 400px; 
+  width: 400px;
   height: auto;
   margin-bottom: 20px;
 }
 
 .landing-container h1 {
-  font-size: 4rem; 
-  color: #fffffe; 
+  font-size: 4rem;
+  color: #fffffe;
   margin-top: 2rem;
 }
 
 .landing-text-sub-headers h3 {
-  color: #fff3ec; 
+  color: #fff3ec;
   text-align: center;
   margin-top: 10px;
 }
 
-
 @media screen and (max-width: 768px) {
-  .landing-container img{
+  .landing-container img {
     width: 200px;
   }
   .landing-container h1 {
-    font-size: 3rem; 
+    font-size: 3rem;
   }
 }
 
 @media screen and (max-width: 576px) {
   .landing-container h1 {
-    font-size: 2rem; 
+    font-size: 2rem;
   }
 }
-
 
 .register-button {
   margin-top: 50px;
@@ -183,18 +179,45 @@ nav ul li {
 }
 
 .testimonial-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 2%; 
+  margin-bottom: 2rem;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
   margin-bottom: 2rem;
 }
 
+.testimonial-grid {
+  margin-bottom: 2rem;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* For viewports smaller than 1200px */
+@media (max-width: 1200px) {
+  .testimonial-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* For viewports smaller than 800px */
+@media (max-width: 800px) {
+  .testimonial-grid {
+    grid-template-columns: 1fr;
+    max-width: 80%;
+    justify-content: center;
+    margin-left: auto; /* Add this line */
+    margin-right: auto; /* Add this line */
+  }
+}
+
 .testimonial-card {
-  flex: 1 1 40%; 
-  max-width: 40%;
-  margin: 1%;
-  padding: 1%;
+  padding: 2rem;
+  display: grid;
+  gap: 1rem;
   background-color: #55423d;
   border-radius: 5px;
   box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.1);
@@ -222,7 +245,7 @@ nav ul li {
   width: 60px;
   height: 60px;
   margin: auto;
-  border-radius: 75%;
+  border-radius: 100%;
   border: 1px solid #ffc0ad;
 }
 
@@ -237,32 +260,25 @@ nav ul li {
   color: #ffc0ad;
 }
 
-@media screen and (max-width: 768px) {
-  .testimonial-card {
-    max-width: 45%; 
-  }
-}
-
 @media screen and (max-width: 576px) {
   .testimonial-card {
-    max-width: 100%; 
-    margin:10px;
+    max-width: 100%;
+    margin: 10px;
   }
 }
-
 
 /*                                                        FOOTER                  */
 
 footer {
   position: relative;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: #55423d;
-    padding: 25px 0 40px 0;
-    display: flex;
-    justify-content: center;
-    width: 100%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #55423d;
+  padding: 25px 0 40px 0;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 footer .cols {
@@ -302,7 +318,21 @@ footer .cols .links-col a:hover {
 footer .cols .links-col a i {
   font-size: 1.25rem;
 }
-@media screen and (max-width : 1350px){
+@media screen and (max-width: 1350px) {
+  /* .testimonial-card {
+    flex: 1 1 40%;
+    max-width: 40%;
+    margin: 1%;
+    padding: 1%;
+  }
+
+  .testimonial-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2%;
+  } */
+
   footer {
     position: relative;
     background: #55423d;
@@ -310,7 +340,7 @@ footer .cols .links-col a i {
     width: 100%;
     margin-top: 100px;
   }
-  
+
   footer .cols {
     display: flex;
     flex-wrap: wrap;
@@ -318,7 +348,7 @@ footer .cols .links-col a i {
     margin-left: 5%;
     margin-right: 5%;
   }
-  
+
   footer .cols > div {
     flex: 1;
     margin: 0 1%;
@@ -338,26 +368,29 @@ footer .cols .links-col a i {
 
   footer .cols .about-cols h3,
   footer .cols .links-col h4 {
-    display:grid;
+    display: grid;
     justify-items: center;
     font-size: 1rem;
-    color: #fff; 
+    color: #fff;
   }
 
   footer .cols .about-cols p {
-    font-size: 0.8rem; 
-    color: #ccc; 
+    font-size: 0.8rem;
+    color: #ccc;
   }
   footer .cols .links-col {
-    text-align: center; 
+    text-align: center;
   }
 
   footer .cols .links-col a {
-    font-size: 14px;   
-    text-align: center; 
-    color: #fff;   
+    font-size: 14px;
+    text-align: center;
+    color: #fff;
   }
 
+  .cols .about-cols p {
+    text-align: center;
+  }
 }
 
 /*                                                LOGIN                          */
@@ -392,7 +425,7 @@ footer .cols .links-col a i {
 
 .form-box h2 {
   font-size: 2rem;
-  color: #271c19; 
+  color: #271c19;
   text-align: center;
 }
 
@@ -477,8 +510,6 @@ footer .cols .links-col a i {
 .login-register p a:hover {
   text-decoration: underline;
 }
-
-
 
 /*                                              SIGN UP PAGE                     */
 
@@ -625,26 +656,25 @@ footer .cols .links-col a i {
   color: red;
 }
 
-.landing-about-container{
-  display:flex;
+.landing-about-container {
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color:white;
-  padding:5%;
- 
+  color: white;
+  padding: 5%;
 }
 .landing-about-container dl {
-  margin-top: 20px; 
+  margin-top: 20px;
 }
-.landing-about-container dt{
+.landing-about-container dt {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
 }
 
-.how-to-use-steps-container ul{
+.how-to-use-steps-container ul {
   border: 1px solid #ccc;
   padding-right: 25%;
   padding-left: 25%;
@@ -652,6 +682,6 @@ footer .cols .links-col a i {
   color: white;
   list-style: none;
 }
-.how-to-use-steps-container li{
+.how-to-use-steps-container li {
   padding: 10px;
 }

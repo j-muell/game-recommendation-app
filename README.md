@@ -11,7 +11,7 @@ In case you are looking for something more specific, use our genre tags in order
 
 ## Screenshots
 
-Include some screenshots of your app here.
+[GameQuest](images/screenshots/frontPage.png)
 
 ## Tech Stack
 

@@ -145,6 +145,11 @@ $genres = [
             font-size: 16px;
             margin: 20px 0;
             position: relative;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-button button:hover {
+            background-color: #ff9e80;
         }
 
         .submit-button button.loading {
@@ -165,6 +170,8 @@ $genres = [
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
+
+
 
         @keyframes spin {
             0% {

@@ -50,4 +50,5 @@ if (isset($_POST["submit"])) {
     createUser($conn, $username, $steamid, $pwd, $terms);
 } else {
     header("location: ../components/signup.php");
+    exit();
 }

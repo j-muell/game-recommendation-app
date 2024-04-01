@@ -136,7 +136,7 @@ function emptyInputLogin($username, $pwd)
 function loginUser($conn, $username, $pwd)
 {
     $userIDExists = userExists($conn, $username);
-
+    // file_put_contents("userExists_debug.log", print_r($userIDExists, true), FILE_APPEND); debugging content
     if ($userIDExists === false) {
         header("location: ../components/login.php?error=wronglogin");
         exit();
@@ -151,8 +151,9 @@ function loginUser($conn, $username, $pwd)
         exit();
     } else if ($checkPwd === true) {
         session_start();
-        $_SESSION["userID"] = $userIDExists["userID"];
+        $_SESSION["userID"] = $userIDExists["userUid"];
         $_SESSION["userUsername"] = $userIDExists["userUsername"];
+        $_SESSION["userSteamID"] = $userIDExists["userSteamID"];
         header("location: ../components/index.php");
         exit();
     }

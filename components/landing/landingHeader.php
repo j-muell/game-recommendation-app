@@ -1,5 +1,10 @@
 <?php
 session_start();
+if (isset($_SESSION["userID"])) {
+    header("location: index.php");
+    exit();
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -19,6 +24,7 @@ session_start();
         <ul>
             <li><a href="/game-recommendation-app/components/landing.php">Home</a></li>
             <li><a href="/game-recommendation-app/components/about.php">About</a></li>
+            <li><a href="/game-recommendation-app/components/how_to_use.php">How to use</a></li>
             <li><a href="/game-recommendation-app/components/login.php">Login</a></li>
             <li><a href="/game-recommendation-app/components/signup.php">Register</a></li>
         </ul>

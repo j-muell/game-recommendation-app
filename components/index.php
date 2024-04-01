@@ -39,6 +39,7 @@ if (isset($_SESSION['games'])) {
 </style> -->
 
 
+
 <script>
     $(document).ready(function() {
         // Function to send AJAX request

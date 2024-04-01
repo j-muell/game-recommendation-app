@@ -675,7 +675,7 @@ function getSteamAppIdIfExists($gameInput, $limit = 1)
     }
 
 
-    if ($query == null | empty($query)) {
+    if (!isset($query)) {
         return [];
     } else {
         try {

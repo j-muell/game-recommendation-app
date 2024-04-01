@@ -54,7 +54,7 @@ $genres = [
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../styles/indexSidebar.css" />
-    <link rel="stylesheet" href="../../styles/index.css">
+    <link rel="stylesheet" href="../styles/index.css">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="../scripts/index.js" defer></script>
@@ -129,7 +129,60 @@ $genres = [
         .game-price {
             font-weight: 400;
         }
+
+        .submit-button {
+            display: flex;
+            justify-content: center;
+        }
+
+        .submit-button button {
+            background-color: #ffc0ad;
+            color: #271c19;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .submit-button button.loading {
+            /* Hide the button text */
+            color: transparent;
+        }
+
+        .submit-button button.loading:after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            border: 2px solid #271c19;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
     </style>
+    <script>
+        $(document).ready(function() {
+            $(".submit-button button").click(function() {
+                $(this).addClass("loading");
+            });
+        });
+    </script>
 </head>
 
 <body>

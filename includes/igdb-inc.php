@@ -80,6 +80,7 @@ $builder = new IGDBQueryBuilder();
 function getGenreIdAndName()
 {
     global $igdb, $builder;
+    $builder = new IGDBQueryBuilder();
 
     try {
         $query = $builder
@@ -144,11 +145,10 @@ function displayTile($gameData)
     if (is_array($gameData)) {
         if (!empty($gameData)) {
             $genreConditions = array_map(function ($genreId) {
-                return "genres = $genreId";
+                return "$genreId";
             }, $gameData);
 
-            $customWhere = implode(' | ', $genreConditions);
-
+            $customWhere = "genres = (" . implode(', ', $genreConditions) . ")";
             try {
                 $builder
                     ->name("count for games")
@@ -272,7 +272,11 @@ function displayTile($gameData)
                 }
 
                 $url .= $imgId . '.jpg';
+            } else {
+                $url = "";
             }
+
+
 
             $finalArray[] = array(
                 'name' => $game->name,
@@ -512,7 +516,7 @@ function gameSearchForNameAndImage($gameInput, $amountOfGames = 1)
 function allGameInfo($gameID, $totalRatingRequest = 60, $limit = 1)
 {
     global $igdb, $builder;
-
+    $builder = new IGDBQueryBuilder();
     try {
         $query = $builder
             ->fields("player_perspectives.name, similar_games, total_rating")
@@ -575,7 +579,7 @@ function allGameInfo($gameID, $totalRatingRequest = 60, $limit = 1)
 function gameInfo($gameInput, $limit = 1)
 {
     global $igdb, $builder;
-
+    $builder = new IGDBQueryBuilder();
 
 
     try {
@@ -645,34 +649,41 @@ function gameInfo($gameInput, $limit = 1)
 function getSteamAppIdIfExists($gameInput, $limit = 1)
 {
     global $igdb, $builder;
+    $builder = new IGDBQueryBuilder();
 
-    try {
-        if (is_numeric($gameInput)) {
-            $query = $builder
-                ->name("Steam App ID/Website link")
-                ->fields("websites.url, websites.category")
-                ->where("id = $gameInput")
-                ->where("websites.category = 13")
-                ->limit($limit)
-                ->build();
-        } else {
-            $query = $builder
-                ->search($gameInput)
-                ->fields("websites.url, websites.category")
-                ->where("websites.category = 13")
-                ->limit($limit)
-                ->build();
+    if (!empty($gameInput) && $gameInput !== null) {
+        try {
+            if (is_numeric($gameInput)) {
+                $query = $builder
+                    ->name("Steam App ID/Website link")
+                    ->fields("websites.url, websites.category")
+                    ->where("id = $gameInput")
+                    ->where("websites.category = 13")
+                    ->limit($limit)
+                    ->build();
+            } else {
+                $query = $builder
+                    ->search($gameInput)
+                    ->fields("websites.url, websites.category")
+                    ->where("websites.category = 13")
+                    ->limit($limit)
+                    ->build();
+            }
+        } catch (IGDBInvalidParameterException $e) {
+            echo "issue in steamappidifexists" . $e->getMessage();
         }
-    } catch (IGDBInvalidParameterException $e) {
-        echo $e->getMessage();
     }
 
-    try {
-        $result = $igdb->game($query);
-    } catch (IGDBEndpointException $e) {
-        echo $e->getMessage();
-    }
 
+    if ($query == null | empty($query)) {
+        return [];
+    } else {
+        try {
+            $result = $igdb->game($query);
+        } catch (IGDBEndpointException $e) {
+            echo $e->getMessage();
+        }
+    }
     $websiteUrls = [];
 
     // print_r($result);

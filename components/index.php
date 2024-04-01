@@ -14,21 +14,6 @@ if (isset($_SESSION['games'])) {
 }
 
 
-// testing some functions to see the functionality
-
-// $tileDisplayOne = displayTile("Red Dead Redemption 2");
-// $tileDisplayTwo = displayTile("Hollow Knight");
-// $tileDisplayThree = displayTile("Overwatch");
-// $tileDisplayFour = displayTile("Counter-Strike 2");
-// $tileDisplayFive = displayTile("Paladins");
-// $tileDisplaySix = displayTile("Dragons Dogma");
-// $tileDisplaySeven = displayTile("Sons of the Forest");
-// $tileDisplayEight = displayTile("Binding of Isaac");
-// $tileDisplayNine = displayTile("ELDEN RING");
-// $tileDisplayTen = displayTile("82606");
-
-
-
 ?>
 <div class="background">
     <div class="search-container">
@@ -38,7 +23,6 @@ if (isset($_SESSION['games'])) {
         </button>
     </div>
     <div class="grid-container" id="grid">
-        <p>why</p>
     </div>
 
 
@@ -61,6 +45,7 @@ if (isset($_SESSION['games'])) {
         function sendRequest() {
             $.post("../includes/retrieveGame-inc.php", $("#filter-form").serialize(), function(data) {
                 $(".grid-container").html(data);
+                $(".submit-button button").removeClass("loading");
             });
         }
 

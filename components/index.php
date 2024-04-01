@@ -15,18 +15,37 @@ if (isset($_SESSION['games'])) {
 
 
 ?>
+
+<div class="search-container">
+    <input type="text" class="search-bar" placeholder="Search for a game...">
+    <button class="search-button">
+        <i class='bx bx-search'></i>
+    </button>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="background">
-    <div class="search-container">
-        <input type="text" class="search-bar" placeholder="Search for a game...">
-        <button class="search-button">
-            <i class='bx bx-search'></i>
-        </button>
-    </div>
     <div class="grid-container" id="grid">
     </div>
-
-
 </div>
+
+
+
 
 <!-- <style>
     html,

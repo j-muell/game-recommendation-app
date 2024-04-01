@@ -1,3 +1,5 @@
+
+
 let arrow = document.querySelectorAll(".arrow");
 console.log(arrow);
 for (var i = 0; i < arrow.length; i++) {
@@ -67,3 +69,6 @@ window.addEventListener("resize", () => {
     wasLessThan780 = false;
   }
 });
+
+
+

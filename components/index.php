@@ -21,41 +21,51 @@ if (isset($_SESSION['games'])) {
     <button class="search-button">
         <i class='bx bx-search'></i>
     </button>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="background">
-    <div class="grid-container" id="grid">
+    <div class="search-results">
+        <p>this content is not blurred</p>
     </div>
 </div>
 
+<!-- used for blurring under search -->
+<div class="overlay">
+</div>
 
 
 
-<!-- <style>
-    html,
-    body {
-        background-color: #271c19;
-        margin: 0;
-        padding: 0;
-        height: 100%;
-    }
-</style> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="grid-container" id="grid">
+</div>
+
+
+
+<!-- THIS IS FOR LATER. MAKING THE SEARCH OVERLAY ON TOP OF THE CONTENT. THIS WILL MAKE IT SO YOU click -->
+<!-- ANYWHERE OUTSIDE THE DISPLAY TO CLOSE THE ENTIRE OVERLAY. -->
+
+<!-- // Get the overlay and search results elements
+var overlay = document.querySelector('.overlay');
+var searchResults = document.querySelector('.search-results');
+
+// Add a click event listener to the overlay
+overlay.addEventListener('click', function() {
+  overlay.style.display = 'none'; // Hide the overlay
+});
+
+// Add a click event listener to the search results container
+searchResults.addEventListener('click', function(event) {
+  event.stopPropagation(); // Stop the click event from propagating up to the overlay
+}); -->
 
 
 

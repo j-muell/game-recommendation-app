@@ -27,6 +27,7 @@ body {
   height: 100%;
   width: 260px;
   background: #55423d;
+  z-index: 100;
 }
 
 .sidebar .logo-details {

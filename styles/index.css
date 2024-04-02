@@ -7,69 +7,124 @@ body {
   padding: 0;
   height: 100%;
 }
-<<<<<<< HEAD
 
-.search-first-container {
-  background-color: white;
+.search-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 50px;
-  margin-right: 50px;
-  margin-left: 50px;
-}
-
-.search-second-container {
-  width: 70%;
-  background-color: #f1f1f1;
-  border-radius: 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-top: 16px; /* Add margin between search bar and results */
+  position: relative; 
+  padding: 20px;
+  box-sizing: border-box;
+  width: 100%; 
+  max-width: 450px; 
+  z-index: 25;
+  margin: 0 auto; 
 }
 
 .search-bar-container {
-  width: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: row;
   align-items: center;
-  margin-bottom: 16px; /* Adjust margin bottom as needed */
+  justify-content: center;
+  width: 100%; 
 }
 
 .search-bar {
-  border: none;
-  outline: none;
-  background: none;
-  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 10px 20px;
   font-size: 16px;
-  flex: 1;
+  outline: none;
+  width: 100%; 
 }
 
 .search-button {
-  background: #ffffff;
+  background-color: #55423d;
+  color: white;
   border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 8px;
   border-radius: 20px;
-  margin-left: 8px;
+  padding: 10px 20px;
+  margin-left: 10px;
+  cursor: pointer;
 }
+
+.search-results {
+  margin-top: 20px;
+  width: 100%; 
+  max-width: 450px; 
+}
+
 
 .game-result {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  margin-top: 8px; /* Adjust margin top as needed */
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .game-cover {
   width: 50px;
-  height: auto;
-  margin-bottom: 8px; 
+  height: 50px;
+  margin-right: 10px;
+  border-radius: 50%;
+}
+
+.game-result span {
+  font-size: 16px;
+  color: #333;
+}
+
+.game-result img {
   border-radius: 8px;
 }
-=======
->>>>>>> 8a528a735c9072745f1eaca0ed51d9be830f04aa
+.wishlist-button {
+  background-color: #55423d;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+@media (max-width: 768px) {
+  .search-container {
+    width: 60%;
+    padding: 10px;
+  }
+  
+  .search-bar {
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+  
+  .search-button {
+    padding: 8px 16px;
+  }
+  
+  .game-result {
+    width: 200px;
+    font-size:10px;
+    padding: 8px;
+  }
+  
+  .game-cover {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .game-result span {
+    font-size: 10px;
+  }
+}
+
+
+
+
+
+
+
+
+

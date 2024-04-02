@@ -28,35 +28,34 @@ $tileDisplayNine = displayTile("Elden Ring");
 <head>
     <link rel="stylesheet" href="../styles/index.css">
 </head>
-<div class="search-first-container">
+
+<div class="search-container">
     <form action="" method="POST" class="search-bar-container">
         <input type="text" name="search" class="search-bar" id="searchInput" placeholder="Search for a game...">
         <button type="submit" class="search-button">
-            <i class='bx bx-search'></i>
+            <i class="bx bx-search"></i>
         </button>
     </form>
-</div>
-<div class="search-second-container">
-    <?php
-    if (!empty($_POST["search"])) {
-        $searchTerm = $_POST["search"];
-        $games = gameSearchForNameAndImage($searchTerm, $amount = 5);
-        if (!empty($games)) {
-            echo "<div id='searchResults' class='search-results'>";
-            foreach ($games as $game) {
-                echo "<div class='game-result'>";
-                echo "<img src='{$game['Cover']}' alt='{$game['Name']}' class='game-cover'>";
-                echo "<span>{$game['Name']}</span>";
-                echo "</div>";
+    <div class="search-results">
+        <?php
+        if (!empty($_POST["search"])) {
+            $searchTerm = $_POST["search"];
+            $games = gameSearchForNameAndImage($searchTerm, $amount = 5);
+            if (!empty($games)) {
+                foreach ($games as $game) {
+                    echo "<div class='game-result'>";
+                    echo "<img src='{$game['Cover']}' alt='{$game['Name']}' class='game-cover'>";
+                    echo "<span>{$game['Name']}</span>";
+                    echo "<button class='wishlist-button'><i class='bx bxs-bookmark-alt-plus'></i></button>";
+                    echo "</div>";
+                }
+            } 
+            else {
+                echo "<p>No games found matching your search.</p>";
             }
-            echo "</div>";
-        } else {
-            echo "<div id='searchResults' class='search-results'>";
-            echo "<p>No games found matching your search.</p>";
-            echo "</div>";
         }
-    }
-    ?>
+        ?>
+    </div>
 </div>
 
 
@@ -64,7 +63,8 @@ $tileDisplayNine = displayTile("Elden Ring");
 
 
 
-?>
+
+
 
     <div class="grid-container">
         <?php

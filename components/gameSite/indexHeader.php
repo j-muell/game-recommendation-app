@@ -217,7 +217,7 @@ $genres = [
                     <li><a class="link-name" href="#">About</a></li>
                     <li><a href="#">How to use</a></li>
                     <li><a href="#">Contact</a></li>
-                    <li><a href="#">Wish-list</a></li>
+                    <li><a href="wishlist.php">Wish-list</a></li>
                 </ul>
             </li>
             <li class="separator">
@@ -272,7 +272,7 @@ $genres = [
                     <li><a class="link-name" href="#">About</a></li>
                     <li><a href="#">How to use</a></li>
                     <li><a href="#">Contact</a></li>
-                    <li><a href="#">Wish-list</a></li>
+                    <li><a href="wishlist.php">Wish-list</a></li>
                 </ul>
             </li>
         </ul>

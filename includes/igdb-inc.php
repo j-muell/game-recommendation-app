@@ -472,6 +472,11 @@ function gameSearchForNameAndImage($gameInput, $amountOfGames = 1)
                     'Name' => $game->name,
                     'Cover' => $url
                 );
+            } else {
+                $finalArray[] = array(
+                    'Name' => $game->name,
+                    'Cover' => "https://images.igdb.com/igdb/image/upload/t_logo_med/nocover.png"
+                );
             }
         }
     } else {

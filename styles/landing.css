@@ -319,20 +319,6 @@ footer .cols .links-col a i {
   font-size: 1.25rem;
 }
 @media screen and (max-width: 1350px) {
-  /* .testimonial-card {
-    flex: 1 1 40%;
-    max-width: 40%;
-    margin: 1%;
-    padding: 1%;
-  }
-
-  .testimonial-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 2%;
-  } */
-
   footer {
     position: relative;
     background: #55423d;

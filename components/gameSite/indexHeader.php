@@ -19,6 +19,31 @@ foreach ($results as $player) {
     $avatarLink = $player['avatar'];
 }
 
+$genres = [
+    2 => 'Point-and-click',
+    4 => 'Fighting',
+    5 => 'Shooter',
+    7 => 'Music',
+    8 => 'Platform',
+    9 => 'Puzzle',
+    10 => 'Racing',
+    11 => 'Real Time Strategy (RTS)',
+    12 => 'Role-playing (RPG)',
+    13 => 'Simulator',
+    14 => 'Sport',
+    15 => 'Strategy',
+    16 => 'Turn-based strategy (TBS)',
+    24 => 'Tactical',
+    25 => 'Hack and Slash',
+    26 => 'Quiz/Trivia',
+    30 => 'Pinball',
+    31 => 'Adventure',
+    32 => 'Indie',
+    33 => 'Arcade',
+    34 => 'Visual Novel',
+    35 => 'Card & Board Game',
+    36 => 'MOBA'
+];
 
 ?>
 
@@ -31,8 +56,80 @@ foreach ($results as $player) {
     <link rel="stylesheet" href="../styles/indexSidebar.css" />
     <link rel="stylesheet" href="../../styles/index.css">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="../scripts/index.js" defer></script>
     <title>GameQuest</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        * {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit,
+                    minmax(400px, 1fr));
+            /* Three columns */
+            gap: 0px;
+            /* Gap between tiles */
+            max-width: 86%;
+            float: right;
+        }
+
+        .game-title {
+            font-weight: 500;
+            color: #ffc0ad;
+            text-align: center;
+        }
+
+        .topper {
+            display: flex;
+        }
+
+        .tile-wrapper {
+            background: #55423d;
+            border-radius: 16px;
+            padding: 1.25rem;
+            margin: 1rem;
+            max-width: 400px;
+        }
+
+        .topper img {
+            border-radius: 1rem;
+            margin-bottom: 6px;
+            width: calc(100% / 3 - 20px);
+        }
+
+        .title-rating-price {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+            color: #fff3ec;
+        }
+
+        .summary,
+        .genre-list {
+            color: #fff3ec;
+        }
+
+        .genre-list {
+            text-decoration: underline;
+        }
+
+        .summary {
+            font-size: 14px;
+        }
+
+        .game-rating,
+        .game-price {
+            font-weight: 400;
+        }
+    </style>
 </head>
 
 <body>
@@ -69,73 +166,21 @@ foreach ($results as $player) {
                     <span class="link-name">Categories</span>
                 </a>
             </li>
-            <form action="../includes/filters-inc.php" method="post">
+            <form action="../includes/retrieveGame-inc.php" method="post" id="filter-form">
                 <ul class="genre-container">
-                    <li class="genre">
-                        <input type="checkbox" name="shooter" id="shooter">
-                        <label for="shooter">Shooter</label>
-                    </li>
-                    <li class="genre">
-                        <input type="checkbox" name="rpg" id="rpg">
-                        <label for="rpg">RPG</label>
-                    </li>
-                    <li class="genre">
-                        <input type="checkbox" name="indie" id="indie">
-                        <label for="indie">Indie</label>
-                    </li>
-                    <li class="genre">
-                        <input type="checkbox" name="singeplayer" id="singeplayer">
-                        <label for="singeplayer">Singleplayer</label>
-                    </li>
-                    <li class="genre">
-                        <input type="checkbox" name="multiplayer" id="multiplayer">
-                        <label for="multiplayer">Multiplayer</label>
-                    </li>
-                    <li class="genre">
-                        <input type="checkbox" name="platformer" id="platformer">
-                        <label for="platformer">Platformer</label>
-                    </li>
-                    <li class="genre">
-                        <input type="checkbox" name="adventure" id="adventure">
-                        <label for="adventure">Adventure</label>
-                    </li>
-                    <li class="genre">
-                        <input type="checkbox" name="survival" id="survival">
-                        <label for="survival">Survival</label>
-                    </li>
-                    <li class="genre">
-                        <input type="checkbox" name="puzzle" id="puzzle">
-                        <label for="puzzle">Puzzle</label>
-                    </li>
-                    <li class="genre">
-                        <input type="checkbox" name="roguelike" id="roguelike">
-                        <label for="roguelike">Rogue-Like</label>
-                    </li>
-                    <li class="genre">
-                        <input type="checkbox" name="soulslike" id="soulslike">
-                        <label for="soulslike">Souls-Like</label>
-                    </li>
-                    <li class="genre">
-                        <input type="checkbox" name="metroidvania" id="metroidvania">
-                        <label for="metroidvania">Metroidvania</label>
-                    </li>
-                    <li class="genre">
-                        <input type="checkbox" name="horror" id="horror">
-                        <label for="horror">Horror</label>
-                    </li>
-                    <li class="genre">
-                        <input type="checkbox" name="action" id="action">
-                        <label for="action">Action</label>
-                    </li>
-                    <li class="genre">
-                        <input type="checkbox" name="deckbuilder" id="deckbuilder">
-                        <label for="deckbuilder">Deckbuilder</label>
-                    </li>
-                    <li class="genre">
-                        <input type="checkbox" name="strategy" id="strategy">
-                        <label for="strategy">Strategy</label>
-                    </li>
+                    <?php
+                    foreach ($genres as $id => $genre) {
+                        echo "<li class=\"genre\">
+                            <input type=\"checkbox\" name=\"$id\" id=\"$id\">
+                            <label for=\"$id\">$genre</label>
+                        </li>";
+                    }
+                    ?>
+
                 </ul>
+                <div class="submit-button">
+                    <button type="submit" name="submit">Apply Filters</button>
+                </div>
             </form>
         </ul>
 

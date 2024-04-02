@@ -1,28 +1,16 @@
 <?php
 
+
 include('gameSite/indexHeader.php');
 require_once "../functions/steamapi/SteamAPI.class.php";
 require_once "../functions/igdb/src/class.igdb.php";
 require_once "../includes/igdb-inc.php";
+// require "../includes/retrieveGame-inc.php";
 
 
-
-
-
-
-
-
-
-
-$tileDisplayOne = displayTile("Red Dead Redemption 2");
-$tileDisplayTwo = displayTile("Hollow Knight");
-$tileDisplayThree = displayTile("Overwatch");
-$tileDisplayFour = displayTile("Counter-Strike 2");
-$tileDisplayFive = displayTile("Paladins");
-$tileDisplaySix = displayTile("Dragons Dogma");
-$tileDisplaySeven = displayTile("Sons of the Forest");
-$tileDisplayEight = displayTile("Binding of Isaac");
-$tileDisplayNine = displayTile("Elden Ring");
+if (isset($_SESSION['games'])) {
+    $gameTiles = $_SESSION['games'];
+}
 
 ?>
 <head>
@@ -36,52 +24,34 @@ $tileDisplayNine = displayTile("Elden Ring");
             <i class="bx bx-search"></i>
         </button>
     </form>
-    <div class="search-results">
-        <?php
-        if (!empty($_POST["search"])) {
-            $searchTerm = $_POST["search"];
-            $games = gameSearchForNameAndImage($searchTerm, $amount = 5);
-            if (!empty($games)) {
-                foreach ($games as $game) {
-                    echo "<div class='game-result'>";
-                    echo "<img src='{$game['Cover']}' alt='{$game['Name']}' class='game-cover'>";
-                    echo "<span>{$game['Name']}</span>";
-                    echo "<button class='wishlist-button'><i class='bx bxs-bookmark-alt-plus'></i></button>";
-                    echo "</div>";
-                }
-            } 
-            else {
-                echo "<p>No games found matching your search.</p>";
+</div>
+<div class="search-second-container">
+    <?php
+    if (!empty($_POST["search"])) {
+        $searchTerm = $_POST["search"];
+        $games = gameSearchForNameAndImage($searchTerm, $amount = 5);
+        if (!empty($games)) {
+            echo "<div id='searchResults' class='search-results'>";
+            foreach ($games as $game) {
+                echo "<div class='game-result'>";
+                echo "<img src='{$game['Cover']}' alt='{$game['Name']}' class='game-cover'>";
+                echo "<span>{$game['Name']}</span>";
+                echo "</div>";
             }
+            echo "</div>";
+        } else {
+            echo "<div id='searchResults' class='search-results'>";
+            echo "<p>No games found matching your search.</p>";
+            echo "</div>";
         }
         ?>
     </div>
 </div>
 
-
-
-
-
-
-
-
-
-    <div class="grid-container">
-        <?php
-        echo $tileDisplayOne;
-        echo $tileDisplayTwo;
-        echo $tileDisplayThree;
-        echo $tileDisplayFour;
-        echo $tileDisplayFive;
-        echo $tileDisplaySix;
-        echo $tileDisplaySeven;
-        echo $tileDisplayEight;
-        echo $tileDisplayNine;
-
-        ?>
-    </div>
+<div class="background">
+  <div class="grid-container" id="grid">
+  </div>
 </div>
-
 
 <!-- <style>
     html,
@@ -92,3 +62,24 @@ $tileDisplayNine = displayTile("Elden Ring");
         height: 100%;
     }
 </style> -->
+
+
+<script>
+    $(document).ready(function() {
+        // Function to send AJAX request
+        function sendRequest() {
+            $.post("../includes/retrieveGame-inc.php", $("#filter-form").serialize(), function(data) {
+                $(".grid-container").html(data);
+            });
+        }
+
+        // Send AJAX request when form is submitted
+        $("#filter-form").on("submit", function(event) {
+            event.preventDefault();
+            sendRequest();
+        });
+
+        // Send AJAX request when page loads
+        sendRequest();
+    });
+</script>

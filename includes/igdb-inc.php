@@ -76,9 +76,52 @@ $builder = new IGDBQueryBuilder();
 */
 
 
-function retreiveGames($genre)
+
+function getGenreIdAndName()
 {
+    global $igdb, $builder;
+
+    try {
+        $query = $builder
+            ->fields("id, name")
+            ->limit(50)
+            ->build();
+    } catch (IGDBInvalidParameterException $e) {
+        echo $e->getMessage();
+    }
+
+    try {
+        $result = $igdb->genre($query);
+    } catch (IGDBEndpointException $e) {
+        echo $e->getMessage();
+    }
+
+    $finalArray = array();
+
+    if (!empty($result)) {
+        foreach ($result as $genre) {
+            $finalArray[] = array(
+                'id' => $genre->id,
+                'name' => $genre->name
+            );
+        }
+    }
+
+    printGenreIdAndName($finalArray);
+
+    return $finalArray;
 }
+
+
+
+function printGenreIdAndName($finalArray)
+{
+    foreach ($finalArray as $genre) {
+        echo 'ID: ' . $genre['id'] . ', Genre: ' . $genre['name'] . '<br>';
+    }
+}
+
+
 
 /*
     This function will return as string with echo content to display in a separate file. Takes game data, either igdb id or string.
@@ -86,89 +129,166 @@ function retreiveGames($genre)
     app ids from igdb into this to get the tile information and display the game content on the main page.
 
 */
+
+
+
+
+
 function displayTile($gameData)
 {
 
     global $igdb, $builder, $steamAPI;
+    $builder = new IGDBQueryBuilder();
 
-    if (!empty($gameData)) {
-        try {
-            if (is_numeric($gameData)) {
-                $query = $builder
-                    ->fields("name, cover.*, genres.name, summary, total_rating")
-                    ->where("id = $gameData")
-                    ->where("category = 0")
-                    ->limit(1)
-                    ->build();
-            } else {
-                $query = $builder
-                    ->search($gameData)
-                    ->fields("name, cover.*, genres.name, summary, total_rating")
-                    ->where("category = 0")
-                    ->limit(1)
-                    ->build();
+    $finalArray = array();
+    if (is_array($gameData)) {
+        if (!empty($gameData)) {
+            $genreConditions = array_map(function ($genreId) {
+                return "genres = $genreId";
+            }, $gameData);
+
+            $customWhere = implode(' | ', $genreConditions);
+
+            try {
+                $builder
+                    ->name("count for games")
+                    ->endpoint("game")
+                    ->custom_where($customWhere . " & category = 0 & total_rating > 60 & websites.category = 13")
+                    ->count()
+                    ->build_multiquery();
+            } catch (IGDBInvalidParameterException $e) {
+                echo $e->getMessage();
             }
-        } catch (IGDBInvalidParameterException $e) {
-            echo $e->getMessage();
+
+            $results = $igdb->multiquery(
+                array(
+                    $builder
+                )
+            );
+
+            // var_dump($results);
+            $offset = rand(1, $results[0]->count);
+            // print_r($offset);
+
+            $options = array(
+                "fields" => "websites.category, category, name, cover.*, genres, genres.name, summary, total_rating",
+                "custom_where" => $customWhere . " & category = 0 & total_rating > 60 & websites.category = 13",
+                "limit" => 1,
+                "offset" => $offset
+            );
+
+
+            $builder = new IGDBQueryBuilder();
+
+            try {
+                $query = $builder
+                    ->options($options)
+                    ->build();
+            } catch (IGDBInvalidParameterException $e) {
+                echo $e->getMessage();
+            }
+
+            try {
+                $result = $igdb->game($query);
+            } catch (IGDBEndpointException $e) {
+                echo $e->getMessage();
+            }
+
+            $finalArray = array();
+        } else {
+            $finalArray = 1;
         }
-
-        try {
-            $result = $igdb->game($query);
-        } catch (IGDBEndpointException $e) {
-            echo $e->getMessage();
-        }
-
-        if (!empty($result)) {
-        }
-
-        $finalArray = array();
-
-        if (!empty($result)) {
-            foreach ($result as $game) {
-
-                $total_rating = number_format($game->total_rating, 1);
-                $summary = isset($game->summary) ? $game->summary : '';
-
-                if (!empty($game->genres)) {
-                    $genres = [];
-
-                    foreach ($game->genres as $genre) {
-                        $genres[] = $genre->name;
-                    }
-
-                    $genres = implode(", ", $genres);
+    } else {
+        if (!empty($gameData)) {
+            try {
+                if (is_numeric($gameData)) {
+                    $query = $builder
+                        ->fields("name, cover.*, genres.name, summary, total_rating")
+                        ->where("id = $gameData")
+                        ->where("category = 0")
+                        ->limit(1)
+                        ->build();
                 } else {
-                    continue;
+                    $query = $builder
+                        ->search($gameData)
+                        ->fields("name, cover.*, genres.name, summary, total_rating")
+                        ->where("category = 0")
+                        ->limit(1)
+                        ->build();
                 }
-
-
-                if (isset($game->cover)) {
-                    $cover = $game->cover;
-                    $width = $cover->width;
-                    $imgId = $cover->image_id;
-
-                    $url = 'https://images.igdb.com/igdb/image/upload/t_';
-
-                    if ($width === 1920) {
-                        $url .= '1080p/';
-                    } else {
-                        $url .= 'cover_big/';
-                    }
-
-                    $url .= $imgId . '.jpg';
-                }
-
-                $finalArray[] = array(
-                    'name' => $game->name,
-                    'cover' => $url,
-                    'totalRating' => $total_rating,
-                    'summary' => $summary,
-                    'genres' => $genres
-                );
+            } catch (IGDBInvalidParameterException $e) {
+                echo $e->getMessage();
             }
+
+            try {
+                $result = $igdb->game($query);
+            } catch (IGDBEndpointException $e) {
+                echo $e->getMessage();
+            }
+
+            $finalArray = array();
+        } else {
+            $finalArray = 1;
         }
     }
 
+    if (!empty($result)) {
+        foreach ($result as $game) {
+            if (empty($game)) {
+                continue;
+            }
+            if (isset($game->total_rating)) {
+                $total_rating = number_format($game->total_rating, 1);
+            } else {
+                $total_rating = "Unable to Locate";
+            }
+
+            $summary = isset($game->summary) ? $game->summary : '';
+
+            if (!empty($game->genres)) {
+                $genres = [];
+
+                foreach ($game->genres as $genre) {
+                    $genres[] = $genre->name;
+                }
+
+                $genres = implode(", ", $genres);
+            } else {
+                continue;
+            }
+
+
+            if (isset($game->cover)) {
+                $cover = $game->cover;
+                $width = $cover->width;
+                $imgId = $cover->image_id;
+
+                $url = 'https://images.igdb.com/igdb/image/upload/t_';
+
+                if ($width === 1920) {
+                    $url .= '1080p/';
+                } else {
+                    $url .= 'cover_big/';
+                }
+
+                $url .= $imgId . '.jpg';
+            }
+
+            $finalArray[] = array(
+                'name' => $game->name,
+                'cover' => $url,
+                'totalRating' => $total_rating,
+                'summary' => $summary,
+                'genres' => $genres
+            );
+        }
+    } else {
+        $finalArray = 1;
+    }
+
+    if ($finalArray === 1) {
+        return "";
+    }
 
     $name = $finalArray[0]['name'];
     $pic = $finalArray[0]['cover'];
@@ -176,17 +296,28 @@ function displayTile($gameData)
     $summary = $finalArray[0]['summary'];
     $genres = $finalArray[0]['genres'];
 
+
     $igdbId = getGameID($name);
     $steamId = getSteamAppIdIfExists($igdbId);
-    $steamId = $steamId[0];
 
-    $gamePrice = $steamAPI->GetGamePrice($steamId, ['ca']);
-
-    if (empty($gamePrice)) {
-        $gamePrice = "Free";
+    if (is_array($steamId) && !empty($steamId)) {
+        $steamId = $steamId[0];
     } else {
-        $gamePrice = "CDN $" . number_format($gamePrice[0]['final'] / 100, 2);
+        $steamId = "Unknown Price.";
     }
+
+    if (is_numeric($steamId)) {
+        $gamePrice = $steamAPI->GetGamePrice($steamId, ['ca']);
+        if (empty($gamePrice)) {
+            $gamePrice = "Free";
+        } else {
+            $gamePrice = "CDN $" . number_format($gamePrice[0]['final'] / 100, 2);
+        }
+    } else {
+        $gamePrice = "Unkown Price.";
+    }
+
+
 
     // $html = "<div class='grid-container'>";
     $html = "<div class='tile-wrapper'>";
@@ -227,6 +358,7 @@ function displayTile($gameData)
               .game-title {
                 font-weight: 500;
                 color: #ffc0ad;
+                text-align: center;
               }
               
               .topper {
@@ -277,13 +409,14 @@ function displayTile($gameData)
         </style>
     ";
 
-    return $html . $styles;
+    return $html;
 }
 
 // This function will take a game name string and amount of games to find and return the following data as an associative array:
 function gameSearchForNameAndImage($gameInput, $amountOfGames = 1)
 {
     global $igdb, $builder;
+    $builder = new IGDBQueryBuilder();
 
     try {
         if (is_numeric($gameInput)) {
@@ -337,6 +470,8 @@ function gameSearchForNameAndImage($gameInput, $amountOfGames = 1)
                 );
             }
         }
+    } else {
+        $finalArray = "";
     }
 
     return $finalArray;
@@ -383,7 +518,7 @@ function allGameInfo($gameID, $totalRatingRequest = 60, $limit = 1)
             ->fields("player_perspectives.name, similar_games, total_rating")
             ->where("id = $gameID")
             ->where("category = 0")
-            ->limit(1)
+            ->limit($limit)
             ->build();
     } catch (IGDBInvalidParameterException $e) {
         echo $e->getMessage();
@@ -411,9 +546,14 @@ function allGameInfo($gameID, $totalRatingRequest = 60, $limit = 1)
                 }
             }
 
-            foreach ($game->player_perspectives as $perspective) {
-                $gamePerspective = $perspective->name;
+            if (!isset($game->player_perspectives)) {
+                $gamePerspective = "";
+            } else {
+                foreach ($game->player_perspectives as $perspective) {
+                    $gamePerspective = $perspective->name;
+                }
             }
+
 
             $finalArray[] = array(
                 'similar_games' => $similarGamesFinal,
@@ -572,7 +712,7 @@ function getSteamAppIdIfExists($gameInput, $limit = 1)
 function getGameID($gameInput)
 {
     global $igdb, $builder;
-
+    $builder = new IGDBQueryBuilder();
     try {
         $query = $builder
             ->search("$gameInput")

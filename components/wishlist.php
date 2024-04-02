@@ -33,7 +33,7 @@ $wishlistTilesNoId = [];
 
 // Retrieve games with igdbUserId from the database
 $userID = $_SESSION['userID'];
-$queryWithUserId = "SELECT * FROM wishlist WHERE userUid IS NOT NULL AND userUid = '$userID'";
+$queryWithUserId = "SELECT * FROM wishlist WHERE igdbGameId IS NOT NULL AND userUid = '$userID'";
 $resultWithUserId = $mysqli->query($queryWithUserId);
 
 if ($resultWithUserId->num_rows > 0) {
@@ -89,7 +89,7 @@ if ($resultWithUserId->num_rows > 0) {
 
 <?php
 // Retrieve games without igdbUserId from the database
-$queryWithoutUserId = "SELECT * FROM wishlist WHERE userUid IS NULL AND userUid = '$userID'";
+$queryWithoutUserId = "SELECT * FROM wishlist WHERE igdbGameId IS NULL AND userUid = '$userID'";
 $resultWithoutUserId = $mysqli->query($queryWithoutUserId);
 
 if ($resultWithoutUserId->num_rows > 0) {

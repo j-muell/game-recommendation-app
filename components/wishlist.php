@@ -101,7 +101,8 @@ if ($resultWithoutUserId->num_rows > 0) {
             $results = gameSearchForNameAndImage($gameName);
             if ($results != null && !empty($results)) {
 
-                $html = "<div class='tile-wrapper'>";
+                $html = "<div class='simple-tile-wrapper'>";
+                $html .= "<i class='bx bx-x' onclick='removeFromWishlist(\"{$gameName}\")'></i>";
                 $html .= "<div class='simple-topper'>";
                 $html .= "<img class='simple-game-image' src='{$results[0]['Cover']}'>";
                 $html .= "<h3 class='game-title'>{$results[0]['Name']}</h3>";
@@ -110,14 +111,15 @@ if ($resultWithoutUserId->num_rows > 0) {
 
                 $wishlistTilesNoId[] =  $html;
             } else {
-                $html = "<div class='tile-wrapper'>";
+                $html = "<div class='simple-tile-wrapper'>";
+                $html .= "<i class='bx bx-x' onclick='removeFromWishlist(\"{$gameName}\")'></i>";
                 $html .= "<div class='simple-topper'>";
                 $html .= "<img class='simple-game-image' src='https://images.igdb.com/igdb/image/upload/t_logo_med/nocover.png'>";
                 $html .= "<h3 class='game-title'>There was an error displaying this game.</h3>";
                 $html .= "</div>";
                 $html .= "</div>";
 
-                $wishlistTilesNoId[] =  $html;
+                $wishlistTilesNoId[] = $html;
             }
         }
     }
@@ -126,9 +128,38 @@ if ($resultWithoutUserId->num_rows > 0) {
 }
 ?>
 
+<script>
+    function removeFromWishlist(gameName) {
+        // Create a new AJAX request
+        console.log('clicked')
+        var xhr = new XMLHttpRequest();
 
+        // Configure the request
+        xhr.open('POST', '../includes/removeFromWishlist-inc.php', true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+        // Handle the response
+        xhr.onload = function() {
+            if (xhr.status == 200) {
+                // If the request was successful, remove the item from the DOM or refresh the page
+                location.reload();
+            }
+        };
+
+        // Send the request with the name of the game to be deleted
+        xhr.send('gameName=' + encodeURIComponent(gameName));
+    }
+</script>
 <div class="grid-container">
     <!-- this is where I will display the game tiles. -->
+    <?php
+    if (!empty($wishlistTilesNoId)) {
+        foreach ($wishlistTilesNoId as $tile) {
+            echo $tile;
+        }
+    }
+
+    ?>
 </div>
 
 <?php

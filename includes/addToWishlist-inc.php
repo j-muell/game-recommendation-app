@@ -7,7 +7,7 @@ $password = 'rootPassword';
 $database = 'gamequest';
 
 // Connect to the database
-$connection = new mysqli($host, $username, $password, $database);
+$connection = new mysqli($host, $username, $password, $database, 3306);
 
 // Check connection
 if ($connection->connect_error) {

@@ -4,7 +4,7 @@ include 'gameSite/sidePageHeader.php';
 require_once '../includes/igdb-inc.php';
 
 // Connect to the database
-$mysqli = new mysqli('localhost', 'root', 'rootPassword', 'gamequest');
+$mysqli = new mysqli('localhost', 'root', 'rootPassword', 'gamequest', 3306);
 
 // Check connection
 if ($mysqli->connect_errno) {

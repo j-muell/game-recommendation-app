@@ -650,14 +650,47 @@ footer .cols .links-col a i {
   color: white;
   padding: 5%;
 }
-.landing-about-container dl {
-  margin-top: 20px;
+
+.landing-about-container p a {
+  text-decoration: none;
+  color: #ffc0ad;
 }
+
+.landing-about-container p a:hover {
+  text-decoration: underline;
+}
+
+.landing-about-container dt {
+  margin-top: 20px;
+  font-weight: 700;
+}
+
+.landing-about-container dd {
+  margin-bottom: 20px;
+}
+
 .landing-about-container dt {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
+}
+
+.dl-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.dl-container .dl-pair {
+  background-color: #55423d;
+  border-radius: 8px;
+  margin: 10px;
+  padding: 20px;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .how-to-use-steps-container ul {

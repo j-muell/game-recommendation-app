@@ -1,5 +1,5 @@
 <?php
-include('landing/landingHeader.php');
+include('gameSite/sidePageHeader.php');
 
 ?>
 
@@ -31,6 +31,7 @@ include('landing/landingHeader.php');
     </div>
 
 </div>
+
 <?php
-include('landing/landingFooter.php')
+include('gameSite/sidePageFooter.php')
 ?>

@@ -89,8 +89,6 @@ $genres = [
             display: flex;
         }
 
-
-
         .tile-wrapper {
             position: relative;
             background: #55423d;
@@ -232,9 +230,9 @@ $genres = [
                     <i class='bx bxs-chevron-down arrow'></i>
                 </div>
                 <ul class="sub-menu">
-                    <li><a class="link-name" href="#">About</a></li>
-                    <li><a href="#">How to use</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a class="link-name" href="aboutLoggedIn.php">About</a></li>
+                    <li><a href="howToUseLoggedIn.php">How to use</a></li>
+                    <li><a href="contactUs.php">Contact</a></li>
                     <li><a href="wishlist.php">Wish-list</a></li>
                 </ul>
             </li>
@@ -287,9 +285,9 @@ $genres = [
                     </a>
                 </div>
                 <ul class="sub-menu">
-                    <li><a class="link-name" href="#">About</a></li>
-                    <li><a href="#">How to use</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a class="link-name" href="aboutLoggedIn.php">About</a></li>
+                    <li><a href="howToUseLoggedIn.php">How to use</a></li>
+                    <li><a href="contactUs.php">Contact</a></li>
                     <li><a href="wishlist.php">Wish-list</a></li>
                 </ul>
             </li>

@@ -45,6 +45,29 @@ if (isset($_SESSION['games'])) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="grid-container" id="grid">
 </div>
 

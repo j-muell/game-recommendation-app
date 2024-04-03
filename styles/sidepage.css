@@ -1,0 +1,83 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+* {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.how-to-use-steps-container ul {
+  border: 1px solid #ccc;
+  padding-right: 25%;
+  padding-left: 25%;
+  margin: 10px;
+  color: #fff3ec;
+  list-style: none;
+}
+.how-to-use-steps-container li {
+  padding: 10px;
+}
+.landing-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  flex: 1;
+  padding: 0 20px;
+  text-align: center;
+}
+
+.landing-container h1 {
+  color: #fff3ec;
+}
+
+.landing-about-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  padding: 5%;
+}
+
+.landing-about-container p a {
+  text-decoration: none;
+  color: #ffc0ad;
+}
+
+.landing-about-container p a:hover {
+  text-decoration: underline;
+}
+
+.landing-about-container dt {
+  margin-top: 20px;
+  font-weight: 700;
+}
+
+.landing-about-container dd {
+  margin-bottom: 20px;
+}
+
+.landing-about-container dt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.dl-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.dl-container .dl-pair {
+  background-color: #55423d;
+  border-radius: 8px;
+  margin: 10px;
+  padding: 20px;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}

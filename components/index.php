@@ -11,8 +11,8 @@ require_once "../includes/igdb-inc.php";
 if (isset($_SESSION['games'])) {
     $gameTiles = $_SESSION['games'];
 }
-
 ?>
+
 <head>
     <link rel="stylesheet" href="../styles/index.css">
 </head>
@@ -25,34 +25,33 @@ if (isset($_SESSION['games'])) {
         </button>
     </form>
 </div>
-<div class="search-second-container">
-    <?php
+
+ <?php
     if (!empty($_POST["search"])) {
         $searchTerm = $_POST["search"];
         $games = gameSearchForNameAndImage($searchTerm, $amount = 5);
         if (!empty($games)) {
-            echo "<div id='searchResults' class='search-results'>";
             foreach ($games as $game) {
                 echo "<div class='game-result'>";
                 echo "<img src='{$game['Cover']}' alt='{$game['Name']}' class='game-cover'>";
                 echo "<span>{$game['Name']}</span>";
+                echo "<button class='wishlist-button'><i class='bx bxs-bookmark-alt-plus'></i></button>";
                 echo "</div>";
             }
             echo "</div>";
-        } else {
+        } 
+        else {
             echo "<div id='searchResults' class='search-results'>";
             echo "<p>No games found matching your search.</p>";
             echo "</div>";
         }
-        ?>
-    </div>
-</div>
+    }
+?>
 
 <div class="background">
   <div class="grid-container" id="grid">
   </div>
 </div>
-
 <!-- <style>
     html,
     body {
@@ -83,3 +82,5 @@ if (isset($_SESSION['games'])) {
         sendRequest();
     });
 </script>
+
+

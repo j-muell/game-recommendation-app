@@ -12,13 +12,13 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   position: relative; 
   padding: 20px;
   box-sizing: border-box;
-  width: 100%; 
-  max-width: 450px; 
+  width: 450px; 
   z-index: 25;
-  margin: 0 auto; 
+  margin: 0 auto;
 }
 
 .search-bar-container {
@@ -35,7 +35,7 @@ body {
   padding: 10px 20px;
   font-size: 16px;
   outline: none;
-  width: 100%; 
+  width: 100%;
 }
 
 .search-button {
@@ -48,39 +48,36 @@ body {
   cursor: pointer;
 }
 
-.search-results {
-  margin-top: 20px;
-  width: 100%; 
-  max-width: 450px; 
-}
-
-
 .game-result {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   justify-content: space-between;
-  margin-bottom: 10px;
-  padding: 10px;
+  width: 100%; 
+  max-width: 450px; 
   border-radius: 8px;
   background-color: #f9f9f9;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 10px auto; 
+  padding: 15px;
 }
 
 .game-cover {
-  width: 50px;
-  height: 50px;
+  width: 50px; 
+  height: 50px; 
   margin-right: 10px;
   border-radius: 50%;
 }
 
 .game-result span {
-  font-size: 16px;
+  font-size: 14px; 
   color: #333;
 }
 
 .game-result img {
   border-radius: 8px;
 }
+
 .wishlist-button {
   background-color: #55423d;
   color: white;
@@ -89,36 +86,39 @@ body {
   padding: 8px 16px;
   cursor: pointer;
 }
-@media (max-width: 768px) {
+
+@media screen and (max-width: 768px) {
   .search-container {
-    width: 60%;
-    padding: 10px;
-  }
-  
-  .search-bar {
-    padding: 8px 16px;
-    font-size: 12px;
-  }
-  
-  .search-button {
-    padding: 8px 16px;
+    width: 65%; 
   }
   
   .game-result {
-    width: 200px;
-    font-size:10px;
-    padding: 8px;
+    width: 65%; 
+    margin: 10px auto; 
+    padding: 18px; 
+  }
+  
+  .search-bar {
+    padding: 6px 14px;
+    font-size: 10px; 
+  }
+  
+  .search-button {
+    padding: 6px 14px;
   }
   
   .game-cover {
-    width: 40px;
-    height: 40px;
+    width: 35px;  
+    height: 35px;  
   }
   
   .game-result span {
-    font-size: 10px;
+    font-size: 10px; 
   }
 }
+
+
+
 
 
 

@@ -54,7 +54,7 @@ $genres = [
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../styles/indexSidebar.css" />
-    <link rel="stylesheet" href="../../styles/index.css">
+    <link rel="stylesheet" href="../styles/index.css">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="../scripts/index.js" defer></script>
@@ -89,13 +89,31 @@ $genres = [
             display: flex;
         }
 
+
+
         .tile-wrapper {
+            position: relative;
             background: #55423d;
             border-radius: 16px;
             padding: 1.25rem;
             margin: 1rem;
             max-width: 400px;
         }
+
+        .tile-wrapper i {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #fff3ec;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .tile-wrapper i:hover {
+            color: #ffc0ad;
+            cursor: pointer;
+        }
+
 
         .topper img {
             border-radius: 1rem;
@@ -129,7 +147,67 @@ $genres = [
         .game-price {
             font-weight: 400;
         }
+
+        .submit-button {
+            display: flex;
+            justify-content: center;
+        }
+
+        .submit-button button {
+            background-color: #ffc0ad;
+            color: #271c19;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 20px 0;
+            position: relative;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-button button:hover {
+            background-color: #ff9e80;
+        }
+
+        .submit-button button.loading {
+            /* Hide the button text */
+            color: transparent;
+        }
+
+        .submit-button button.loading:after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            border: 2px solid #271c19;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+
+
+        @keyframes spin {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
     </style>
+    <script>
+        $(document).ready(function() {
+            $(".submit-button button").click(function() {
+                $(this).addClass("loading");
+            });
+        });
+    </script>
 </head>
 
 <body>
@@ -157,7 +235,7 @@ $genres = [
                     <li><a class="link-name" href="#">About</a></li>
                     <li><a href="#">How to use</a></li>
                     <li><a href="#">Contact</a></li>
-                    <li><a href="#">Wish-list</a></li>
+                    <li><a href="wishlist.php">Wish-list</a></li>
                 </ul>
             </li>
             <li class="separator">
@@ -212,7 +290,7 @@ $genres = [
                     <li><a class="link-name" href="#">About</a></li>
                     <li><a href="#">How to use</a></li>
                     <li><a href="#">Contact</a></li>
-                    <li><a href="#">Wish-list</a></li>
+                    <li><a href="wishlist.php">Wish-list</a></li>
                 </ul>
             </li>
         </ul>

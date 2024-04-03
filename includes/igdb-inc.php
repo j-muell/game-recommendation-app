@@ -80,6 +80,7 @@ $builder = new IGDBQueryBuilder();
 function getGenreIdAndName()
 {
     global $igdb, $builder;
+    $builder = new IGDBQueryBuilder();
 
     try {
         $query = $builder
@@ -144,11 +145,10 @@ function displayTile($gameData)
     if (is_array($gameData)) {
         if (!empty($gameData)) {
             $genreConditions = array_map(function ($genreId) {
-                return "genres = $genreId";
+                return "$genreId";
             }, $gameData);
 
-            $customWhere = implode(' | ', $genreConditions);
-
+            $customWhere = "genres = (" . implode(', ', $genreConditions) . ")";
             try {
                 $builder
                     ->name("count for games")
@@ -272,15 +272,30 @@ function displayTile($gameData)
                 }
 
                 $url .= $imgId . '.jpg';
+            } else {
+                $url = "";
             }
 
-            $finalArray[] = array(
-                'name' => $game->name,
-                'cover' => $url,
-                'totalRating' => $total_rating,
-                'summary' => $summary,
-                'genres' => $genres
-            );
+
+            if (isset($game->id)) {
+                $igdbId = $game->id;
+                $finalArray[] = array(
+                    'id' => $igdbId,
+                    'name' => $game->name,
+                    'cover' => $url,
+                    'totalRating' => $total_rating,
+                    'summary' => $summary,
+                    'genres' => $genres
+                );
+            } else {
+                $finalArray[] = array(
+                    'name' => $game->name,
+                    'cover' => $url,
+                    'totalRating' => $total_rating,
+                    'summary' => $summary,
+                    'genres' => $genres
+                );
+            }
         }
     } else {
         $finalArray = 1;
@@ -290,14 +305,18 @@ function displayTile($gameData)
         return "";
     }
 
+    if (!empty($finalArray[0]['id'])) {
+        $igdbId = $finalArray[0]['id'];
+    }
     $name = $finalArray[0]['name'];
     $pic = $finalArray[0]['cover'];
     $rating = $finalArray[0]['totalRating'];
     $summary = $finalArray[0]['summary'];
     $genres = $finalArray[0]['genres'];
 
-
-    $igdbId = getGameID($name);
+    if (!isset($igdbId) || empty($igdbId)) {
+        $igdbId = getGameID($name);
+    }
     $steamId = getSteamAppIdIfExists($igdbId);
 
     if (is_array($steamId) && !empty($steamId)) {
@@ -314,13 +333,13 @@ function displayTile($gameData)
             $gamePrice = "CDN $" . number_format($gamePrice[0]['final'] / 100, 2);
         }
     } else {
-        $gamePrice = "Unkown Price.";
+        $gamePrice = "Unknown Price.";
     }
 
 
 
     // $html = "<div class='grid-container'>";
-    $html = "<div class='tile-wrapper'>";
+    $html = "<div class='tile-wrapper' data-game-id='{$igdbId}'>";
     $html .= "<div class='topper'>";
     $html .= "<img src='{$pic}'>";
     $html .= "<div class='title-rating-price'>";                   // this div will be flex row
@@ -468,6 +487,11 @@ function gameSearchForNameAndImage($gameInput, $amountOfGames = 1)
                     'Name' => $game->name,
                     'Cover' => $url
                 );
+            } else {
+                $finalArray[] = array(
+                    'Name' => $game->name,
+                    'Cover' => "https://images.igdb.com/igdb/image/upload/t_logo_med/nocover.png"
+                );
             }
         }
     } else {
@@ -512,7 +536,7 @@ function gameSearchForNameAndImage($gameInput, $amountOfGames = 1)
 function allGameInfo($gameID, $totalRatingRequest = 60, $limit = 1)
 {
     global $igdb, $builder;
-
+    $builder = new IGDBQueryBuilder();
     try {
         $query = $builder
             ->fields("player_perspectives.name, similar_games, total_rating")
@@ -575,7 +599,7 @@ function allGameInfo($gameID, $totalRatingRequest = 60, $limit = 1)
 function gameInfo($gameInput, $limit = 1)
 {
     global $igdb, $builder;
-
+    $builder = new IGDBQueryBuilder();
 
 
     try {
@@ -645,34 +669,41 @@ function gameInfo($gameInput, $limit = 1)
 function getSteamAppIdIfExists($gameInput, $limit = 1)
 {
     global $igdb, $builder;
+    $builder = new IGDBQueryBuilder();
 
-    try {
-        if (is_numeric($gameInput)) {
-            $query = $builder
-                ->name("Steam App ID/Website link")
-                ->fields("websites.url, websites.category")
-                ->where("id = $gameInput")
-                ->where("websites.category = 13")
-                ->limit($limit)
-                ->build();
-        } else {
-            $query = $builder
-                ->search($gameInput)
-                ->fields("websites.url, websites.category")
-                ->where("websites.category = 13")
-                ->limit($limit)
-                ->build();
+    if (!empty($gameInput) && $gameInput !== null) {
+        try {
+            if (is_numeric($gameInput)) {
+                $query = $builder
+                    ->name("Steam App ID/Website link")
+                    ->fields("websites.url, websites.category")
+                    ->where("id = $gameInput")
+                    ->where("websites.category = 13")
+                    ->limit($limit)
+                    ->build();
+            } else {
+                $query = $builder
+                    ->search($gameInput)
+                    ->fields("websites.url, websites.category")
+                    ->where("websites.category = 13")
+                    ->limit($limit)
+                    ->build();
+            }
+        } catch (IGDBInvalidParameterException $e) {
+            echo "issue in steamappidifexists" . $e->getMessage();
         }
-    } catch (IGDBInvalidParameterException $e) {
-        echo $e->getMessage();
     }
 
-    try {
-        $result = $igdb->game($query);
-    } catch (IGDBEndpointException $e) {
-        echo $e->getMessage();
-    }
 
+    if (!isset($query)) {
+        return [];
+    } else {
+        try {
+            $result = $igdb->game($query);
+        } catch (IGDBEndpointException $e) {
+            echo $e->getMessage();
+        }
+    }
     $websiteUrls = [];
 
     // print_r($result);

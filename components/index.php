@@ -14,45 +14,59 @@ if (isset($_SESSION['games'])) {
 }
 
 
-// testing some functions to see the functionality
-
-// $tileDisplayOne = displayTile("Red Dead Redemption 2");
-// $tileDisplayTwo = displayTile("Hollow Knight");
-// $tileDisplayThree = displayTile("Overwatch");
-// $tileDisplayFour = displayTile("Counter-Strike 2");
-// $tileDisplayFive = displayTile("Paladins");
-// $tileDisplaySix = displayTile("Dragons Dogma");
-// $tileDisplaySeven = displayTile("Sons of the Forest");
-// $tileDisplayEight = displayTile("Binding of Isaac");
-// $tileDisplayNine = displayTile("ELDEN RING");
-// $tileDisplayTen = displayTile("82606");
-
-
-
 ?>
-<div class="background">
-    <div class="search-container">
-        <input type="text" class="search-bar" placeholder="Search for a game...">
-        <button class="search-button">
-            <i class='bx bx-search'></i>
-        </button>
-    </div>
-    <div class="grid-container" id="grid">
-        <p>why</p>
-    </div>
 
-
+<div class="search-container">
+    <input type="text" class="search-bar" placeholder="Search for a game...">
+    <button class="search-button">
+        <i class='bx bx-search'></i>
+    </button>
+    <div class="search-results">
+        <p>this content is not blurred</p>
+    </div>
 </div>
 
-<!-- <style>
-    html,
-    body {
-        background-color: #271c19;
-        margin: 0;
-        padding: 0;
-        height: 100%;
-    }
-</style> -->
+<!-- used for blurring under search -->
+<div class="overlay">
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="grid-container" id="grid">
+</div>
+
+
+
+<!-- THIS IS FOR LATER. MAKING THE SEARCH OVERLAY ON TOP OF THE CONTENT. THIS WILL MAKE IT SO YOU click -->
+<!-- ANYWHERE OUTSIDE THE DISPLAY TO CLOSE THE ENTIRE OVERLAY. -->
+
+<!-- // Get the overlay and search results elements
+var overlay = document.querySelector('.overlay');
+var searchResults = document.querySelector('.search-results');
+
+// Add a click event listener to the overlay
+overlay.addEventListener('click', function() {
+  overlay.style.display = 'none'; // Hide the overlay
+});
+
+// Add a click event listener to the search results container
+searchResults.addEventListener('click', function(event) {
+  event.stopPropagation(); // Stop the click event from propagating up to the overlay
+}); -->
+
 
 
 <script>
@@ -61,6 +75,13 @@ if (isset($_SESSION['games'])) {
         function sendRequest() {
             $.post("../includes/retrieveGame-inc.php", $("#filter-form").serialize(), function(data) {
                 $(".grid-container").html(data);
+                $(".submit-button button").removeClass("loading");
+
+                $('.tile-wrapper').each(function() {
+                    var gameId = $(this).data('game-id');
+                    $(this).append("<i class='bx bxs-bookmark-alt-plus' onclick='addToWishlistFromIndex(\"" + gameId + "\")'></i>");
+                });
+
             });
         }
 
@@ -73,4 +94,17 @@ if (isset($_SESSION['games'])) {
         // Send AJAX request when page loads
         sendRequest();
     });
+
+    function addToWishlistFromIndex(gameId) {
+        $.post("../includes/addToWishlistFromIndex-inc.php", {
+            wishlistGameId: gameId
+        }, function(response) {
+            if (response.trim() === 'true') {
+                alert("Game added to wishlist.");
+            } else {
+                alert("Error adding game to wishlist.");
+            }
+
+        });
+    }
 </script>

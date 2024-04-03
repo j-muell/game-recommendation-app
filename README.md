@@ -18,7 +18,7 @@ In case you are looking for something more specific, use our genre tags in order
 ## Tech Stack
 
 **Client:** HTML/CSS, JavaScript
-
+**Extras:** JQuery, Steam API, IGDB
 **Server:** PHP
 
 ## Run Locally
@@ -27,3 +27,7 @@ Clone the project
 
 ```bash
   git clone https://github.com/j-muell/game-recommendation-app.git
+```
+
+## Project Structure
+

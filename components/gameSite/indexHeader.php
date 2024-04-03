@@ -89,13 +89,31 @@ $genres = [
             display: flex;
         }
 
+
+
         .tile-wrapper {
+            position: relative;
             background: #55423d;
             border-radius: 16px;
             padding: 1.25rem;
             margin: 1rem;
             max-width: 400px;
         }
+
+        .tile-wrapper i {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #fff3ec;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .tile-wrapper i:hover {
+            color: #ffc0ad;
+            cursor: pointer;
+        }
+
 
         .topper img {
             border-radius: 1rem;

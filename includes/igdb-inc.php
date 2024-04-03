@@ -277,14 +277,25 @@ function displayTile($gameData)
             }
 
 
-
-            $finalArray[] = array(
-                'name' => $game->name,
-                'cover' => $url,
-                'totalRating' => $total_rating,
-                'summary' => $summary,
-                'genres' => $genres
-            );
+            if (isset($game->id)) {
+                $igdbId = $game->id;
+                $finalArray[] = array(
+                    'id' => $igdbId,
+                    'name' => $game->name,
+                    'cover' => $url,
+                    'totalRating' => $total_rating,
+                    'summary' => $summary,
+                    'genres' => $genres
+                );
+            } else {
+                $finalArray[] = array(
+                    'name' => $game->name,
+                    'cover' => $url,
+                    'totalRating' => $total_rating,
+                    'summary' => $summary,
+                    'genres' => $genres
+                );
+            }
         }
     } else {
         $finalArray = 1;
@@ -294,14 +305,18 @@ function displayTile($gameData)
         return "";
     }
 
+    if (!empty($finalArray[0]['id'])) {
+        $igdbId = $finalArray[0]['id'];
+    }
     $name = $finalArray[0]['name'];
     $pic = $finalArray[0]['cover'];
     $rating = $finalArray[0]['totalRating'];
     $summary = $finalArray[0]['summary'];
     $genres = $finalArray[0]['genres'];
 
-
-    $igdbId = getGameID($name);
+    if (!isset($igdbId) || empty($igdbId)) {
+        $igdbId = getGameID($name);
+    }
     $steamId = getSteamAppIdIfExists($igdbId);
 
     if (is_array($steamId) && !empty($steamId)) {
@@ -318,13 +333,13 @@ function displayTile($gameData)
             $gamePrice = "CDN $" . number_format($gamePrice[0]['final'] / 100, 2);
         }
     } else {
-        $gamePrice = "Unkown Price.";
+        $gamePrice = "Unknown Price.";
     }
 
 
 
     // $html = "<div class='grid-container'>";
-    $html = "<div class='tile-wrapper'>";
+    $html = "<div class='tile-wrapper' data-game-id='{$igdbId}'>";
     $html .= "<div class='topper'>";
     $html .= "<img src='{$pic}'>";
     $html .= "<div class='title-rating-price'>";                   // this div will be flex row

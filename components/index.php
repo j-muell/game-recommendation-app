@@ -76,6 +76,12 @@ searchResults.addEventListener('click', function(event) {
             $.post("../includes/retrieveGame-inc.php", $("#filter-form").serialize(), function(data) {
                 $(".grid-container").html(data);
                 $(".submit-button button").removeClass("loading");
+
+                $('.tile-wrapper').each(function() {
+                    var gameId = $(this).data('game-id');
+                    $(this).append("<i class='bx bxs-bookmark-alt-plus' onclick='addToWishlistFromIndex(\"" + gameId + "\")'></i>");
+                });
+
             });
         }
 
@@ -88,4 +94,17 @@ searchResults.addEventListener('click', function(event) {
         // Send AJAX request when page loads
         sendRequest();
     });
+
+    function addToWishlistFromIndex(gameId) {
+        $.post("../includes/addToWishlistFromIndex-inc.php", {
+            wishlistGameId: gameId
+        }, function(response) {
+            if (response.trim() === 'true') {
+                alert("Game added to wishlist.");
+            } else {
+                alert("Error adding game to wishlist.");
+            }
+
+        });
+    }
 </script>

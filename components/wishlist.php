@@ -52,7 +52,35 @@ if ($resultWithUserId->num_rows > 0) {
 
 
 <div class="grid-container">
+    <?php
+    if (!empty($wishlistTilesWithId)) {
+        foreach ($wishlistTilesWithId as $tile) {
+            echo $tile;
+        }
+    }
+    ?>
 </div>
+
+<script>
+    var tiles = document.querySelectorAll('.tile-wrapper');
+
+    tiles.forEach(function(tile) {
+        // Get the game ID from the tile's data attribute
+        var gameId = tile.dataset.gameId;
+
+        // Create a new i element
+        var icon = document.createElement('i');
+
+        // Add the classes to the i element
+        icon.classList.add('bx', 'bx-x');
+
+        // Add the onclick attribute to the i element
+        icon.setAttribute('onclick', 'removeFromWishlist("' + gameId + '")');
+
+        // Append the i element to the tile
+        tile.appendChild(icon);
+    });
+</script>
 
 
 <div class="wishlist-form-container">
@@ -129,9 +157,9 @@ if ($resultWithoutUserId->num_rows > 0) {
 ?>
 
 <script>
-    function removeFromWishlist(gameName) {
+    function removeFromWishlist(gameData) {
         // Create a new AJAX request
-        console.log('clicked')
+        console.log(gameData);
         var xhr = new XMLHttpRequest();
 
         // Configure the request
@@ -147,7 +175,7 @@ if ($resultWithoutUserId->num_rows > 0) {
         };
 
         // Send the request with the name of the game to be deleted
-        xhr.send('gameName=' + encodeURIComponent(gameName));
+        xhr.send('gameData=' + encodeURIComponent(gameData));
     }
 </script>
 <div class="grid-container">

@@ -6,7 +6,6 @@ include('gameSite/indexHeader.php');
 require_once "../functions/steamapi/SteamAPI.class.php";
 require_once "../functions/igdb/src/class.igdb.php";
 require_once "../includes/igdb-inc.php";
-// require "../includes/retrieveGame-inc.php";
 
 
 if (isset($_SESSION['games'])) {

@@ -34,10 +34,10 @@ If you plan to run this project locally, there are a few things to note:
 1. You will need to run the SQL Scripts in the extras contect.
 
 2. In any location which there is a connection to the localhost database, there is a password involved for the root user. If you are using xampp to run this project, you will need to configure your root user to have the password rootPassword. In order to do this, follow the steps below.
-   2.1 Inside of xampp, click config under Apache and then 'phpMyAdmin (config.inc.php)'
-   2.2 In this file, change the line as follows `$cfg['Servers'][$i]['password'] = 'rootPassword';`
-   2.3 After this, navigate to the phpMyAdmin panel. From here, select 'User accounts' and 'root', 'localhost' with Global Privileges set to 'ALL PRIVILEGES'.
-   2.4 Select the change password tab and follow the directions.
+   - 2.1 Inside of xampp, click config under Apache and then 'phpMyAdmin (config.inc.php)'
+   - 2.2 In this file, change the line as follows `$cfg['Servers'][$i]['password'] = 'rootPassword';`
+   - 2.3 After this, navigate to the phpMyAdmin panel. From here, select 'User accounts' and 'root', 'localhost' with Global Privileges set to 'ALL PRIVILEGES'.
+   - 2.4 Select the change password tab and follow the directions.
 
 3. You should now be able to run the project.
 

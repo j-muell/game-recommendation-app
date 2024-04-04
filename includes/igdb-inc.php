@@ -469,6 +469,9 @@ function gameSearchForNameAndImage($gameInput, $amountOfGames = 1)
         foreach ($result as $game) {
             if (isset($game->cover)) {
                 $cover = $game->cover;
+                if (isset($game->id)) {
+                    $igdbId = $game->id;
+                }
 
                 $width = $cover->width;
                 $imgId = $cover->image_id;
@@ -483,15 +486,33 @@ function gameSearchForNameAndImage($gameInput, $amountOfGames = 1)
 
                 $url .= $imgId . '.jpg';
 
-                $finalArray[] = array(
-                    'Name' => $game->name,
-                    'Cover' => $url
-                );
+                if (!empty($igdbId)) {
+                    $finalArray[] = array(
+                        'Name' => $game->name,
+                        'Cover' => $url,
+                        'id' => $igdbId
+                    );
+                } else {
+                    $finalArray[] = array(
+                        'Name' => $game->name,
+                        'Cover' => $url
+                    );
+                }
             } else {
-                $finalArray[] = array(
-                    'Name' => $game->name,
-                    'Cover' => "https://images.igdb.com/igdb/image/upload/t_logo_med/nocover.png"
-                );
+
+                if (!empty($igdbId)) {
+                    $finalArray[] = array(
+                        'Name' => $game->name,
+                        'Cover' => "https://images.igdb.com/igdb/image/upload/t_logo_med/nocover.png",
+                        'id' => $igdbId
+                    );
+                } else {
+
+                    $finalArray[] = array(
+                        'Name' => $game->name,
+                        'Cover' => "https://images.igdb.com/igdb/image/upload/t_logo_med/nocover.png"
+                    );
+                }
             }
         }
     } else {

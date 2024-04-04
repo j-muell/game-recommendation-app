@@ -7,3 +7,149 @@ body {
   padding: 0;
   height: 100%;
 }
+
+.search-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 20px;
+  box-sizing: border-box;
+  width: 450px;
+  z-index: 25;
+  margin: 0 auto;
+}
+
+.search-results {
+  display: none;
+  position: absolute;
+  z-index: 500;
+  top: 90%;
+  left: 0;
+  width: 450px;
+  background-color: #55423d;
+  padding: 1.5rem;
+  border-radius: 12px;
+}
+
+.search-results.open {
+  display: block;
+}
+
+.overlay.active {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(4px);
+  z-index: 1;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.search-bar-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.search-bar {
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  outline: none;
+  width: 100%;
+}
+
+.search-button {
+  background-color: #55423d;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  margin-left: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.search-button:hover {
+  background-color: #ffc0ad;
+}
+
+.game-result {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 450px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 10px auto;
+  padding: 15px;
+}
+
+.game-cover {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+  border-radius: 50%;
+}
+
+.game-result span {
+  font-size: 14px;
+  color: #333;
+}
+
+.game-result img {
+  border-radius: 8px;
+}
+
+.wishlist-button {
+  background-color: #55423d;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.wishlist-button:hover {
+  background-color: #ffc0ad;
+}
+
+@media screen and (max-width: 768px) {
+  .search-container {
+    width: 65%;
+  }
+
+  .game-result {
+    width: 65%;
+    margin: 10px auto;
+    padding: 18px;
+  }
+
+  .search-bar {
+    padding: 6px 14px;
+    font-size: 10px;
+  }
+
+  .search-button {
+    padding: 6px 14px;
+  }
+
+  .game-cover {
+    width: 35px;
+    height: 35px;
+  }
+
+  .game-result span {
+    font-size: 10px;
+  }
+}

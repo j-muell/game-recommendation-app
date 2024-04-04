@@ -17,54 +17,21 @@ if (isset($_SESSION['games'])) {
 ?>
 
 <div class="search-container">
-    <input type="text" class="search-bar" placeholder="Search for a game...">
-    <button class="search-button">
-        <i class='bx bx-search'></i>
-    </button>
+    <div class="search-bar-container">
+        <input type="text" class="search-bar" placeholder="Search for a game...">
+        <button class="search-button" onclick="Search()">
+            <i class='bx bx-search'></i>
+        </button>
+    </div>
+
     <div class="search-results">
-        <p>this content is not blurred</p>
+
     </div>
 </div>
 
 <!-- used for blurring under search -->
 <div class="overlay">
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -116,6 +83,23 @@ searchResults.addEventListener('click', function(event) {
 
         // Send AJAX request when page loads
         sendRequest();
+
+
+        var overlay = document.querySelector('.overlay');
+        var searchResults = document.querySelector('.search-results');
+
+        // Add a click event listener to the overlay
+        overlay.addEventListener('click', function() {
+            overlay.style.display = 'none'; // Hide the overlay
+            searchResults.classList.remove('open'); // Close the search results
+        });
+
+        // Add a click event listener to the search results container
+        searchResults.addEventListener('click', function(event) {
+            event.stopPropagation(); // Stop the click event from propagating up to the overlay
+        });
+
+
     });
 
     function addToWishlistFromIndex(gameId) {
@@ -127,6 +111,28 @@ searchResults.addEventListener('click', function(event) {
             } else {
                 alert("Error adding game to wishlist.");
             }
+
+        });
+    }
+
+    function Search($gameId) {
+        var searchInput = document.querySelector('.search-bar').value;
+        var search = $(".search-bar").val();
+        $.post("../includes/search-inc.php", {
+            search: search
+        }, function(data) {
+
+            $(".search-results").empty();
+            var games = data.split("<!--delimiter-->")
+
+            $.each(games, function(index, game) {
+                console.log(game);
+                $(".search-results").append(game);
+            });
+
+            $(".search-results").addClass("open");
+            $(".overlay").addClass("active");
+            $(".overlay").css("display", "block");
 
         });
     }

@@ -31,3 +31,24 @@ Clone the project
 
 ## Project Structure
 
+The root folder of GameQuest holds 7 main directories
+
+- Components
+  - This directory is designed to have every visual element you can see on our website.
+  - Whether it is from the gameSite or the landing page, it exists within this directory and potential subdirectories.
+- Extras
+  - Anything extra that is unrelated to the main app, such as SQL Queries for our database.
+- Functions
+  - This directory is designed to have any files that are purely including for function purposes.
+  - For example, our SteamAPI Wrapper that was overhauled by our team, or the IGDB PHP Wrapper. Both are linked above in the readme.
+- Images
+- Includes
+  - Includes is dedicated to specifically backend/server php files, and generally anything to do with databse work. It also utilizing the functions directory files.
+- Scripts
+  - This directory is for most of the javascript in our application, aside from some minor in-line javascript.
+- Styles
+  - Any stylesheets in our application.
+
+ If you have any questions please contact me.
+
+ @2024

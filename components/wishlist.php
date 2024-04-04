@@ -46,7 +46,7 @@ if ($resultWithUserId->num_rows > 0) {
         }
     }
 } else {
-    echo '<div class="error-message"><h5>No games found within your wishlist added through GameQuest.</h5></div>';
+    echo '<div class="error-message-games"><h5>No games found within your wishlist added through GameQuest.</h5></div>';
 }
 ?>
 
@@ -152,7 +152,7 @@ if ($resultWithoutUserId->num_rows > 0) {
         }
     }
 } else {
-    echo '<div class="error-message"><h5>No games added by you manually.</h5></div>';
+    echo '<div class="error-message-games"><h5>No games added by you manually.</h5></div>';
 }
 ?>
 

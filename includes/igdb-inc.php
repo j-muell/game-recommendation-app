@@ -582,7 +582,12 @@ function allGameInfo($gameID, $totalRatingRequest = 60, $limit = 1)
     if (!empty($result)) {
         foreach ($result as $game) {
             $similarGames = $game->similar_games;
-            $totalRating = $game->total_rating;
+            if (!isset($game->total_rating)) {
+                // echo '' . var_dump($game->total_rating);
+                $totalRating = "No Rating Found";
+            } else {
+                $totalRating = $game->total_rating;
+            }
 
             $similarGamesFinal = [];
             if (!empty($similarGames)) {

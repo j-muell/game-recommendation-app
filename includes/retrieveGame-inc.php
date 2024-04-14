@@ -53,11 +53,13 @@ function retrieveGame()
 
         $games = $recentGames[0]['games'];
 
+        // echo '<br>' . var_dump($games) . '<br>';
+
 
         $gameData = [];
 
         foreach ($games as $game) {
-            if ($game['appid'] == 431960) {
+            if ($game['appid'] == 431960) { // if the game is wallpaper engine dont bother...
                 continue;
             }
             $name = $game['name'];
@@ -69,13 +71,15 @@ function retrieveGame()
             ];
         }
 
-        // print_r($gameData[0]['name']);
+        // echo "<br>" . var_dump($gameData) . "<br>";
+
 
         $similarGames = [];
         foreach ($gameData as $game) {
             $gameName = $game['name'];
-            $gameName = preg_replace('/[^a-zA-Z0-9\s\-:\']/', '', $gameName); // Strip special characters
+            $gameName = preg_replace('/[^a-zA-Z0-9\s\-\']/', '', $gameName); // Strip special characters
             $gameId = getGameID($gameName);
+            // echo "<br> Game id: " . $gameId . "Game name: " . $gameName . "<br>";
             if (empty($gameId)) {
                 continue;
             }
@@ -87,6 +91,8 @@ function retrieveGame()
 
             // Process similar games
         }
+
+        // echo "<br>" . var_dump($similarGames);
 
         // Sort $gameData based on highest playtime first
         usort($gameData, function ($a, $b) {

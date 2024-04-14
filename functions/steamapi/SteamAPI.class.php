@@ -91,6 +91,10 @@ class SteamAPI
 		$playerInfo = $this->GetPlayerInfo($steamid);
 
 		// Iterate through player info to check if visibility is set to "Public"
+
+		// NOTE: With how steam functions, if your steam profile which is being used to access this data through your API key has any relation to the user, the visibility may appear
+		// as FriendsOfFriends, even if the profile is set to public. This is how steam works and is not a bug in the code. In order to cirumvent this issue, we must check for both visibility states.
+		// If the profile is set to FriendsOfFriends, we can assume that the profile is public, as the user has some relation to the profile.
 		foreach ($playerInfo as $player) {
 
 			if ($player['communityvisibilitystate'] === 'Public' || $player['communityvisibilitystate'] === 'FriendsOfFriends') {
@@ -99,23 +103,6 @@ class SteamAPI
 		}
 
 		return false; // Profile is not public
-	}
-
-
-	public function isProfilePublicTest($steamid)
-	{
-		$steamid = $this->resolveURL($steamid);
-		// Get player info using the existing GetPlayerInfo() function
-		$playerInfo = $this->GetPlayerInfo($steamid);
-
-		// Iterate through player info to check if visibility is set to "Public"
-		foreach ($playerInfo as $player) {
-			if ($player['communityvisibilitystate'] === 'Public' || $player['communityvisibilitystate'] === 'FriendsOfFriends') {
-				return $player['communityvisibilitystate']; // Profile is public
-			}
-		}
-
-		return $player['communityvisibilitystate']; // Profile is not public
 	}
 
 	// original had error $this expected as array but was string. from line 7.

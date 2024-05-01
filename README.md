@@ -14,6 +14,9 @@ In case you are looking for something more specific, use our genre tags in order
 ![GameQuest](images/screenshots/frontPage.png)
 ![GameQuest](images/screenshots/register.png)
 ![GameQuest](images/screenshots/gamePage.png)
+![GameQuest](images/screenshots/home.png)
+![GameQuest](images/screenshots/search.png)
+![GameQuest](images/screenshots/wishlist.png)
 
 ## Tech Stack
 

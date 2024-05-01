@@ -17,9 +17,9 @@ In case you are looking for something more specific, use our genre tags in order
 
 ## Tech Stack
 
-**Client:** HTML/CSS, JavaScript
-**Extras:** JQuery, Steam API, IGDB
-**Server:** PHP
+**Client:** HTML/CSS, JavaScript <br>
+**Extras:** Steam API, IGDB <br>
+**Server:** PHP, JQuery, AJAX
 
 ## Run Locally
 

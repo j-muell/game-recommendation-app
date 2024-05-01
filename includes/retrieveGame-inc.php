@@ -79,14 +79,18 @@ function retrieveGame()
             $gameName = $game['name'];
             $gameName = preg_replace('/[^a-zA-Z0-9\s\-\']/', '', $gameName); // Strip special characters
             $gameId = getGameID($gameName);
-            // echo "<br> Game id: " . $gameId . "Game name: " . $gameName . "<br>";
             if (empty($gameId)) {
                 continue;
             }
             $gameInfo = allGameInfo($gameId);
+            if (isset($gameInfo[0]['similar_games'])) {
+                $similarGamesArray = $gameInfo[0]['similar_games'];
+            } else {
+                $similarGamesArray = [];
+            }
             $similarGames[] = array(
                 'gameName' => $gameName,
-                'gameSimilarGames' => $gameInfo[0]['similar_games']
+                'gameSimilarGames' => $similarGamesArray
             );
 
             // Process similar games
